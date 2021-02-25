@@ -1,0 +1,2 @@
+D:\Divine_Scr\Tee.LoneDruid\TeeLoneDruid\obj\Debug\TeeLoneDruid.csprojAssemblyReference.cache
+D:\Divine_Scr\Tee.LoneDruid\TeeLoneDruid\obj\Debug\TeeLoneDruid.csproj.CoreCompileInputs.cache
