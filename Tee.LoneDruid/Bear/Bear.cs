@@ -1,4 +1,4 @@
-﻿using Divine;
+using Divine;
 using Divine.SDK.Extensions;
 using Divine.SDK.Helpers;
 using Divine.SDK.Orbwalker;
@@ -101,21 +101,30 @@ namespace TeeLoneDruid
                 BearHero.Attack(HeroTarget);
             }
 
-            new item_orchid(BearHero, HeroTarget);
+            try
+            {
+                new item_orchid(BearHero, HeroTarget);
 
-            new item_bloodthorn(BearHero, HeroTarget);
+                new item_bloodthorn(BearHero, HeroTarget);
 
-            new item_mjollnir(BearHero, HeroTarget);
+                new item_mjollnir(BearHero, HeroTarget);
 
-            new item_mask_of_madness(BearHero, HeroTarget);
+                new item_mask_of_madness(BearHero, HeroTarget);
 
-            new item_abyssal_blade(BearHero, HeroTarget);
+                new item_abyssal_blade(BearHero, HeroTarget);
 
-            new item_nullifier(BearHero, HeroTarget);
+                new item_nullifier(BearHero, HeroTarget);
 
-            new item_medallion_of_courage(BearHero, HeroTarget);
+                new item_medallion_of_courage(BearHero, HeroTarget);
 
-            new item_solar_crest(BearHero, HeroTarget);
+                new item_solar_crest(BearHero, HeroTarget);
+            }
+            catch (Exception)
+            {
+
+                //nothing
+            }
+
 
         }
 
