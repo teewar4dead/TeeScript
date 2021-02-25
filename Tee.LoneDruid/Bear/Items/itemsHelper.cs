@@ -1,4 +1,4 @@
-﻿using Divine;
+using Divine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,12 +44,20 @@ namespace TeeLoneDruid.Bear.Items
         }
         public static void CastItemTarget(Unit unit, Unit target, AbilityId abilityId)
         {
-
-            var Item = unit.Inventory.Items.FirstOrDefault(x => x.Id == abilityId);
-            if (Item != null && Item.Level > 0 && Item.Cooldown == 0 && ManaCheck(Item.ManaCost, unit.Mana))
+            try
             {
-                Item.Cast(target);
+                var Item = unit.Inventory.Items.FirstOrDefault(x => x.Id == abilityId);
+                if (Item != null && Item.Level > 0 && Item.Cooldown == 0 && ManaCheck(Item.ManaCost, unit.Mana))
+                {
+                    Item.Cast(target);
+                }
             }
+            catch (Exception)
+            {
+
+                //nothing
+            }
+           
         }
     }
 }
