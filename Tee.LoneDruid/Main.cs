@@ -13,8 +13,7 @@ namespace TeeLoneDruid
         {
             new MenuGlobal();
             new BearSpirit();
-            sdfszdfvszd
-                fdgbdxcvbfxgcb
+
         }
     }
 }
