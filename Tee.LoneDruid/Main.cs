@@ -9,6 +9,7 @@ namespace TeeLoneDruid
 {
     public class Main : Bootstrapper
     {
+    
         protected override void OnActivate()
         {
             new MenuGlobal();
