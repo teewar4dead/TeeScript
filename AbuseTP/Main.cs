@@ -57,8 +57,17 @@ namespace AbuseTP
                 courier.Follow(MyHero);
                 if (courier.Position.Distance2D(MyHero.Position) <= 200)
                 {
+                    foreach (var item in MyHero.Inventory.Items)
+                    {
+                        if(item.Id == AbilityId.item_travel_boots)
+                        {
+                            Player.Sell(MyHero, item); 
+                        }
+                      
+                    }
+                   
                     MyHero.Give(MyHero.Inventory.TownPortalScroll, courier);
-                    Player.Sell(MyHero, MyHero.Inventory.Item1); // не работает
+                   
                 }
             }
             
