@@ -14,5 +14,3 @@ D:\Divine_Scr\TeeScript\AbuseTP\obj\Release\Tee.AbuseTP.csprojAssemblyReference.
 D:\Divine_Scr\TeeScript\AbuseTP\obj\Release\Tee.AbuseTP.csproj.CoreCompileInputs.cache
 D:\Divine_Scr\TeeScript\AbuseTP\obj\Release\Tee.AbuseTP.csproj.CopyComplete
 D:\Divine_Scr\TeeScript\AbuseTP\obj\Release\Tee.AbuseTP.dll
-d:\Divine_Scr\TeeScript\AbuseTP\bin\Release\Tee.AbuseTP.pdb
-d:\Divine_Scr\TeeScript\AbuseTP\obj\Release\Tee.AbuseTP.pdb
