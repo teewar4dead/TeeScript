@@ -11,6 +11,7 @@ namespace AbuseTP
 {
     public class Main : Bootstrapper
     {
+        private bool check = false;
         private readonly Sleeper SleeperOrder_1 = new Sleeper();
         private MenuHoldKey Abuse { get; set; }
         private static readonly Hero MyHero = EntityManager.LocalHero;
@@ -24,16 +25,21 @@ namespace AbuseTP
 
         private void Abuse_ValueChanged(MenuHoldKey holdKey, Divine.Menu.EventArgs.HoldKeyEventArgs e)
         {
+            
             if (e.Value)
             {
-                UpdateManager.IngameUpdate += UpdateManager_IngameUpdate;
+                if (MyHero.Player.UnreliableGold >= 2500 && MyHero.ActiveShop == ShopType.Base && !FindItem(MyHero, AbilityId.item_travel_boots))
+                {
+                   
+                    UpdateManager.IngameUpdate += UpdateManager_IngameUpdate;
+                }
+
             }
             else
             {
                 UpdateManager.IngameUpdate -= UpdateManager_IngameUpdate;
             }
         }
-
         private void UpdateManager_IngameUpdate()
         {
             if (SleeperOrder_1.Sleeping)
@@ -47,14 +53,14 @@ namespace AbuseTP
             SleeperOrder_1.Sleep(150);
             var courier = EntityManager.GetEntities<Courier>().Where(x => x.IsAlive && x.IsControllable).FirstOrDefault();
             var shop = EntityManager.GetEntities<Shop>().FirstOrDefault(x=> x.Position.Distance2D(MyHero.Position) <= 400);
-            if (MyHero.Player.ReliableGold >= 2500 && MyHero.ActiveShop == ShopType.Base)
+           
             {
                 if (!FindItem(MyHero, AbilityId.item_travel_boots))
                 {
                     Player.Buy(MyHero, AbilityId.item_boots); // не работает
                     Player.Buy(MyHero, AbilityId.item_recipe_travel_boots); // не работает
                 }
-                courier.Follow(MyHero);
+                courier.Move(MyHero.Position);
                 if (courier.Position.Distance2D(MyHero.Position) <= 200)
                 {
                     foreach (var item in MyHero.Inventory.Items)
