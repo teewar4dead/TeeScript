@@ -47,7 +47,7 @@ namespace AbuseTP
             SleeperOrder_1.Sleep(150);
             var courier = EntityManager.GetEntities<Courier>().Where(x => x.IsAlive && x.IsControllable).FirstOrDefault();
             var shop = EntityManager.GetEntities<Shop>().FirstOrDefault(x=> x.Position.Distance2D(MyHero.Position) <= 400);
-            if (MyHero.Player.ReliableGold <= 2500 && MyHero.ActiveShop == ShopType.Base)
+            if (MyHero.Player.ReliableGold >= 2500 && MyHero.ActiveShop == ShopType.Base)
             {
                 if (!FindItem(MyHero, AbilityId.item_travel_boots))
                 {
