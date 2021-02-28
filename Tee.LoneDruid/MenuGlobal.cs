@@ -16,8 +16,10 @@ namespace TeeLoneDruid
         public MenuGlobal()
         {
             var RootMenu = MenuManager.CreateRootMenu("Tee.LoneDruid");
+          
             OnOff = RootMenu.CreateSwitcher("Enable", true);
             var BearMenu = RootMenu.CreateMenu("Spirit Bear");
+            BearMenu.SetAbilityTexture(Divine.AbilityId.lone_druid_spirit_bear);
             RootMenu.SetFontColor(Color.Indigo);
 
             bearConfig = new BearConfig(BearMenu);

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using TeeLoneDruid.Bear.Items;
 using TeeLoneDruid.Bear.Items.Neutral;
 
@@ -20,14 +21,17 @@ namespace TeeLoneDruid
         public static readonly Hero LoneHero = EntityManager.LocalHero;
         public static Unit BearHero;
         private Hero HeroTarget;
+        private bool HeroTargetCheck;
         public BearSpirit()
         {
             if(LoneHero.HeroId == HeroId.npc_dota_hero_lone_druid)
             {
                 UpdateManager.IngameUpdate += UpdateManager_AutoItems;
                 MenuGlobal.OnOff.ValueChanged += OnOff_ValueChanged;
+                InputManager.MouseKeyDown += InputManager_MouseKeyDown;
+ 
                 
-
+                
                 if (BearConfig.SummonBear.Value && LoneHero.Level == 1)
                 {
                     LoneHero.Spellbook.Spell1.Upgrade();
@@ -39,6 +43,45 @@ namespace TeeLoneDruid
                 //nothing
             }
         }
+
+        private void InputManager_MouseKeyDown(MouseEventArgs e)
+        {
+            if(BearConfig.AutoCombo.Value)
+            {
+                HeroTarget = EntityManager.GetEntities<Hero>().Where(x => !x.IsAlly(EntityManager.LocalHero)
+                   && x.IsAlive
+                   && x.IsVisible
+                   && x.IsValid
+                   && !x.IsIllusion
+                     && x.Distance2D(GameManager.MousePosition) < 800).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
+
+                try
+                {
+                    if (e.MouseKey == MouseKey.Right && HeroTarget.Position.Distance2D(GameManager.MousePosition) < 140)
+                    {
+                        if (HeroTargetCheck)
+                        {
+                            UpdateManager.IngameUpdate += BearComboUpdate;
+                        }
+
+                        HeroTargetCheck = false;
+
+                    }
+                    else if(!BearConfig.BearCombo.Value)
+                    {
+                        HeroTarget = null;
+                        UpdateManager.IngameUpdate -= BearComboUpdate;
+                        HeroTargetCheck = true;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    //nothing
+                }
+            }
+        }
+
         private bool find_blink(Hero hero)
         {
             var Item = hero.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_blink);
@@ -81,7 +124,23 @@ namespace TeeLoneDruid
 
             new item_bullwhip(BearHero);
 
+            if (BearConfig.VBE.Value)
+            {
+                if(BearHero.IsVisibleToEnemies && BearHero.IsAlive)
+                {
+                    ParticleManager.CreateOrUpdateParticle("VBE", "particles/items_fx/aura_shivas.vpcf", BearHero, ParticleAttachment.AbsOriginFollow, new ControlPoint(1, 255, 255, 255), new ControlPoint(2, 255));
 
+                    
+                }
+                else
+                {
+                    ParticleManager.RemoveParticle("VBE");
+                }
+            }
+            else
+            {
+                ParticleManager.RemoveParticle("VBE");
+            }
         }
 
         
@@ -180,12 +239,16 @@ namespace TeeLoneDruid
         {
             if (e.Value)
             {
+
                 BearConfig.BearCombo.ValueChanged += BearCombo_ValueChanged;
             }
             else
             {
+
                 BearConfig.BearCombo.ValueChanged -= BearCombo_ValueChanged;
             }
         }
+
+      
     }
 }
