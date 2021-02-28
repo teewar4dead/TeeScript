@@ -46,7 +46,8 @@ namespace TeeLoneDruid
 
         private void InputManager_MouseKeyDown(MouseEventArgs e)
         {
-            if(BearConfig.AutoCombo.Value)
+            string select = LoneHero.Player.SelectedUnits.FirstOrDefault().ToString();
+            if (BearConfig.AutoCombo.Value && select == "npc_dota_lone_druid_bear1")
             {
                 HeroTarget = EntityManager.GetEntities<Hero>().Where(x => !x.IsAlly(EntityManager.LocalHero)
                    && x.IsAlive
@@ -57,6 +58,10 @@ namespace TeeLoneDruid
 
                 try
                 {
+                    if(!HeroTarget.IsAlive)
+                    {
+                        UpdateManager.IngameUpdate -= BearComboUpdate;
+                    }
                     if (e.MouseKey == MouseKey.Right && HeroTarget.Position.Distance2D(GameManager.MousePosition) < 140)
                     {
                         if (HeroTargetCheck)
