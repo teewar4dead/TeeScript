@@ -46,8 +46,9 @@ namespace TeeLoneDruid
 
         private void InputManager_MouseKeyDown(MouseEventArgs e)
         {
+            var Select = LoneHero.Player.SelectedUnits.Where(x => x.ClassId == ClassId.CDOTA_Unit_SpiritBear || x.ClassId == ClassId.CDOTA_Unit_Hero_LoneDruid);
             string select = LoneHero.Player.SelectedUnits.FirstOrDefault().ToString();
-            if (BearConfig.AutoCombo.Value && select == "npc_dota_lone_druid_bear1")
+            if (BearConfig.AutoCombo.Value && (Select.Count() == 1 || Select.Count() == 2))
             {
                 HeroTarget = EntityManager.GetEntities<Hero>().Where(x => !x.IsAlly(EntityManager.LocalHero)
                    && x.IsAlive
@@ -58,7 +59,7 @@ namespace TeeLoneDruid
 
                 try
                 {
-                    if(!HeroTarget.IsAlive)
+                    if(HeroTarget == null)
                     {
                         UpdateManager.IngameUpdate -= BearComboUpdate;
                     }
@@ -166,10 +167,10 @@ namespace TeeLoneDruid
             {
                 return;
             }
-            
-            
 
-            if (HeroTarget == null)
+
+
+            if (HeroTarget == null || !HeroTarget.IsAlive)
             {
                 HeroTarget = EntityManager.GetEntities<Hero>().Where(x => !x.IsAlly(EntityManager.LocalHero)
                     && x.IsAlive
@@ -177,7 +178,7 @@ namespace TeeLoneDruid
                     && x.IsValid
                     && !x.IsIllusion
                     && x.Distance2D(GameManager.MousePosition) < 800).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
-                BearHero.Move(GameManager.MousePosition);
+               
             }
             if (BearConfig.HitRun.Value)
             {
