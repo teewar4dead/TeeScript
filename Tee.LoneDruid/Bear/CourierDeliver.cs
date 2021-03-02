@@ -57,11 +57,14 @@ namespace TeeLoneDruid.Bear
                             else
                             {
                                 countSlot = BearHero.Inventory.FreeMainSlots.Count() + BearHero.Inventory.FreeBackpackSlots.Count();
-                                for (int i = 0; i < countSlot; i++)
-                                {
-                                    var item = GetCourier().Inventory.Items.FirstOrDefault();
-                                    GetCourier().Give(item, BearHero);
-                                }
+                                Console.WriteLine(countSlot);
+                                    for (int i = 0; i <= countSlot; i++)
+                                    {
+                                        var item = GetCourier().Inventory.GetItem((ItemSlot)i);
+
+                                        GetCourier().Give(item, BearHero);
+                                    }
+                                
                                 GetCourier().Spellbook.Spell3.Cast();
                                 CourierGiveItem = false;
 
