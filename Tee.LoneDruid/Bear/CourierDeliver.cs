@@ -17,23 +17,25 @@ namespace TeeLoneDruid.Bear
         [Obsolete]
         public CourierDeliver()
         {
+            var countSlot = BearHero.Inventory.FreeMainSlots.Count() + BearHero.Inventory.FreeBackpackSlots.Count();
             Prioritet = true;
             try
             {
-                Console.WriteLine(GetCourier().State);
-                if (BearHero.IsAlive)
+               
+                if (BearHero.IsAlive && GetCourier().IsAlive && countSlot != 0)
                 {
+                    
                     if (Prioritet == true)
                     {
                         if (GetCourier().State == CourierState.Deliver && GetSelectDruid() != null)
                         {
-                            Console.WriteLine("dsd1");
+
                             Prioritet = false;
                         }
                         else
                         {
-                            Console.WriteLine("dsd2");
-                            Prioritet = true;
+
+                          Prioritet = true;
                         }
                         
                     }
@@ -50,16 +52,19 @@ namespace TeeLoneDruid.Bear
                             if (GetCourier().Distance2D(BearHero.Position) >= 200)
                             {
                                 GetCourier().Follow(BearHero);
+                               
                             }
                             else
                             {
-                                foreach (var item in GetCourier().Inventory.Items)
+                                countSlot = BearHero.Inventory.FreeMainSlots.Count() + BearHero.Inventory.FreeBackpackSlots.Count();
+                                for (int i = 0; i < countSlot; i++)
                                 {
+                                    var item = GetCourier().Inventory.Items.FirstOrDefault();
                                     GetCourier().Give(item, BearHero);
                                 }
                                 GetCourier().Spellbook.Spell3.Cast();
                                 CourierGiveItem = false;
-                                
+
                             }
                         }
                         else
