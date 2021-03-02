@@ -19,20 +19,29 @@ namespace TeeLoneDruid.Bear.Items
 
         public static bool FindItem(Unit unit, AbilityId abilityId)
         {
-            var Item = unit.Inventory.Items.FirstOrDefault(x => x.Id == abilityId);
-
-            bool BoolItem;
-
-            if(Item != null)
+            bool BoolItem = false;
+            try
             {
-                BoolItem = true;
+                var Item = unit.Inventory.Items.FirstOrDefault(x => x.Id == abilityId);
+
+                if (Item != null)
+                {
+                    BoolItem = true;
+                }
+                else
+                {
+                    BoolItem = false;
+                }
+
             }
-            else
+            catch (Exception)
             {
-                BoolItem = false;
+
+               
             }
 
             return BoolItem;
+
         }
         public static void CastItem(Unit unit, AbilityId abilityId)
         {

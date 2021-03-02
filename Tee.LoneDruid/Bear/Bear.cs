@@ -2,29 +2,29 @@ using Divine;
 using Divine.SDK.Extensions;
 using Divine.SDK.Helpers;
 using Divine.SDK.Orbwalker;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TeeLoneDruid.Bear;
 using TeeLoneDruid.Bear.Items;
 using TeeLoneDruid.Bear.Items.Neutral;
 
 namespace TeeLoneDruid
 {
-    class BearSpirit
+    class BearSpirit : GetEntity
     {
         private readonly Dictionary<Ability, float> CastTime = new Dictionary<Ability, float>();
         private readonly Sleeper SleeperOrder_1 = new Sleeper();
         private readonly Sleeper SleeperOrder_2 = new Sleeper();
-        public static readonly Hero LoneHero = EntityManager.LocalHero;
-        public static Unit BearHero;
-        private Hero HeroTarget;
         private bool HeroTargetCheck;
+
         public BearSpirit()
         {
-            if(LoneHero.HeroId == HeroId.npc_dota_hero_lone_druid)
+            if(LocalDruidHero.HeroId == HeroId.npc_dota_hero_lone_druid)
             {
                 UpdateManager.IngameUpdate += UpdateManager_AutoItems;
                 MenuGlobal.OnOff.ValueChanged += OnOff_ValueChanged;
@@ -32,10 +32,10 @@ namespace TeeLoneDruid
  
                 
                 
-                if (BearConfig.SummonBear.Value && LoneHero.Level == 1)
+                if (BearConfig.SummonBear.Value && LocalDruidHero.Level == 1)
                 {
-                    LoneHero.Spellbook.Spell1.Upgrade();
-                    LoneHero.Spellbook.Spell1.Cast();
+                    LocalDruidHero.Spellbook.Spell1.Upgrade();
+                    LocalDruidHero.Spellbook.Spell1.Cast();
                 }
             }
             else
@@ -46,16 +46,12 @@ namespace TeeLoneDruid
 
         private void InputManager_MouseKeyDown(MouseEventArgs e)
         {
-            var Select = LoneHero.Player.SelectedUnits.Where(x => x.ClassId == ClassId.CDOTA_Unit_SpiritBear || x.ClassId == ClassId.CDOTA_Unit_Hero_LoneDruid);
-            string select = LoneHero.Player.SelectedUnits.FirstOrDefault().ToString();
-            if (BearConfig.AutoCombo.Value && (Select.Count() == 1 || Select.Count() == 2))
+
+            
+            
+            if (BearConfig.AutoCombo.Value && (GetSelectDruidAndBear().Count() == 1 || GetSelectDruidAndBear().Count() == 2))
             {
-                HeroTarget = EntityManager.GetEntities<Hero>().Where(x => !x.IsAlly(EntityManager.LocalHero)
-                   && x.IsAlive
-                   && x.IsVisible
-                   && x.IsValid
-                   && !x.IsIllusion
-                     && x.Distance2D(GameManager.MousePosition) < 800).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
+                GetHeroTarget();
 
                 try
                 {
@@ -88,40 +84,25 @@ namespace TeeLoneDruid
             }
         }
 
-        private bool find_blink(Hero hero)
-        {
-            var Item = hero.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_blink);
-            bool BoolItem;
 
-            if (Item != null)
-            {
-                BoolItem = true;
-              
-            }
-            else
-            {
-                BoolItem = false;
-            }
 
-            return BoolItem;
-        }
-        
-
+        [Obsolete]
         private void UpdateManager_AutoItems()
         {
-            BearHero = EntityManager.GetEntities<Unit>().FirstOrDefault(x => x.ClassId == ClassId.CDOTA_Unit_SpiritBear && x.IsAlive && x.IsControllable);
+            GetBearHero();
+
             if (SleeperOrder_1.Sleeping)
             {
                 return;
             }
-            if(BearHero == null)
+            if (BearHero == null)
             {
                 return;
             }
-            
+
             SleeperOrder_1.Sleep(150);
-            
-            
+
+
             new item_phase_boots(BearHero);
 
             new item_spider_legs(BearHero);
@@ -130,26 +111,21 @@ namespace TeeLoneDruid
 
             new item_bullwhip(BearHero);
 
-            if (BearConfig.VBE.Value)
-            {
-                if(BearHero.IsVisibleToEnemies && BearHero.IsAlive)
-                {
-                    ParticleManager.CreateOrUpdateParticle("VBE", "particles/items_fx/aura_shivas.vpcf", BearHero, ParticleAttachment.AbsOriginFollow, new ControlPoint(1, 255, 255, 255), new ControlPoint(2, 255));
+            new VisibleByEnemy();
 
-                    
-                }
-                else
-                {
-                    ParticleManager.RemoveParticle("VBE");
-                }
-            }
-            else
-            {
-                ParticleManager.RemoveParticle("VBE");
-            }
+            new CourierDeliver();
+
+            RendererManager.Draw += RendererManager_Draw;
         }
 
-        
+
+        private static readonly float scaling = RendererManager.Scaling;
+        private void RendererManager_Draw()
+        {
+            if (CourierGiveItem == true)
+                RendererManager.DrawTexture(AbilityId.lone_druid_spirit_bear, new RectangleF(RendererManager.ScreenSize.X - (83 * scaling), RendererManager.ScreenSize.Y - (90 * scaling), 60 * scaling, 60 * scaling), AbilityTextureType.Round, true);
+
+        }
         private void BearComboUpdate()
         {
 
@@ -167,23 +143,19 @@ namespace TeeLoneDruid
             {
                 return;
             }
-
+           
 
 
             if (HeroTarget == null || !HeroTarget.IsAlive)
             {
-                HeroTarget = EntityManager.GetEntities<Hero>().Where(x => !x.IsAlly(EntityManager.LocalHero)
-                    && x.IsAlive
-                    && x.IsVisible
-                    && x.IsValid
-                    && !x.IsIllusion
-                    && x.Distance2D(GameManager.MousePosition) < 800).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
-               
+                GetHeroTarget();
             }
+
             if (BearConfig.HitRun.Value)
             {
                 BearHero.Attack(HeroTarget);
             }
+
             else
             {
                 BearHero.Attack(HeroTarget);
@@ -230,7 +202,7 @@ namespace TeeLoneDruid
             {
                 if (BearHero != null)
                 {
-                    BearHero.Follow(LoneHero);
+                    BearHero.Follow(LocalDruidHero);
                 }
                 
                 HeroTarget = null;

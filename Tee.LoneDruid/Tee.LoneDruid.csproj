@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="Bear\Bear.cs" />
     <Compile Include="Bear\BearConfig.cs" />
+    <Compile Include="Bear\CourierDeliver.cs" />
+    <Compile Include="Bear\GetEntity.cs" />
     <Compile Include="Bear\Items\itemsHelper.cs" />
     <Compile Include="Bear\Items\item_abyssal_blade.cs" />
     <Compile Include="Bear\Items\item_bloodthorn.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Bear\Items\item_solar_crest.cs" />
     <Compile Include="Bear\Items\Neutral\item_spider_legs.cs" />
     <Compile Include="Bear\Items\Neutral\item_bullwhip.cs" />
+    <Compile Include="Bear\VisibleByEnemy.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="MenuGlobal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
