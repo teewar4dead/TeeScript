@@ -25,6 +25,7 @@ namespace TeeLoneDruid
         {
             if(LocalDruidHero.HeroId == HeroId.npc_dota_hero_lone_druid)
             {
+
                 UpdateManager.IngameUpdate += UpdateManager_AutoItems;
                 MenuGlobal.OnOff.ValueChanged += OnOff_ValueChanged;
                 InputManager.MouseKeyDown += InputManager_MouseKeyDown;
