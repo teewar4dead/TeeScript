@@ -16,15 +16,7 @@ namespace TeeLoneDruid
         public static MenuSwitcher HitRun { get; set; }
         public static MenuSwitcher AutoCombo { get; set; }
         public static MenuSwitcher VBE { get; set; }
-
-        public BearConfig(Menu RootMenu)
-        {
-            SummonBear = RootMenu.CreateSwitcher("Summon the bear at the beginning of the game");
-            BearCombo = RootMenu.CreateHoldKey("ComboBear", Key.None);
-            HitRun = RootMenu.CreateSwitcher("Use OrbWalker", true);
-            AutoCombo = RootMenu.CreateSwitcher("Auto Combo", true);
-            VBE = RootMenu.CreateSwitcher("Visible by enemy", true);
-            AbilityToggler = RootMenu.CreateItemToggler("Auto item", new Dictionary<AbilityId, bool>
+        public static Dictionary<AbilityId, bool> ListSpell = new Dictionary<AbilityId, bool>
             {
                 { AbilityId.item_phase_boots, true },
                 { AbilityId.item_spider_legs, true },
@@ -40,9 +32,19 @@ namespace TeeLoneDruid
                 { AbilityId.item_solar_crest, true },
                 { AbilityId.item_satanic, true }
 
-            });
+            };
+
+        public BearConfig(Menu RootMenu)
+        {
+
+            SummonBear = RootMenu.CreateSwitcher("Summon the bear at the beginning of the game");
+            BearCombo = RootMenu.CreateHoldKey("ComboBear", Key.None);
+            HitRun = RootMenu.CreateSwitcher("Use OrbWalker", true);
+            AutoCombo = RootMenu.CreateSwitcher("Auto Combo", true);
+            VBE = RootMenu.CreateSwitcher("Visible by enemy", true);
+            AbilityToggler = RootMenu.CreateItemToggler("Auto item", ListSpell);
 
         }
-        
+
     }
 }

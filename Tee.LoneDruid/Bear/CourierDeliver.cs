@@ -57,7 +57,7 @@ namespace TeeLoneDruid.Bear
                             else
                             {
                                 countSlot = BearHero.Inventory.FreeMainSlots.Count() + BearHero.Inventory.FreeBackpackSlots.Count();
-                                Console.WriteLine(countSlot);
+                                
                                     for (int i = 0; i <= countSlot; i++)
                                     {
                                         var item = GetCourier().Inventory.GetItem((ItemSlot)i);

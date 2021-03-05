@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TeeLoneDruid.Bear;
 using TeeLoneDruid.Bear.Items;
-using TeeLoneDruid.Bear.Items.Neutral;
 
 namespace TeeLoneDruid
 {
@@ -101,15 +100,12 @@ namespace TeeLoneDruid
             }
 
             SleeperOrder_1.Sleep(150);
+            if (BearConfig.BearCombo.Value == false)
+            {
+                ItemsDinamic.AutoCastItem(BearHero, BearConfig.ListSpell);
+            }
 
 
-            new item_phase_boots(BearHero);
-
-            new item_spider_legs(BearHero);
-
-            new item_hand_of_midas(BearHero);
-
-            new item_bullwhip(BearHero);
 
             new VisibleByEnemy();
 
@@ -134,7 +130,7 @@ namespace TeeLoneDruid
                 return;
             }
 
-            SleeperOrder_2.Sleep(150);
+            SleeperOrder_2.Sleep(200);
             if (BearHero == null)
             {
                 return;
@@ -163,23 +159,7 @@ namespace TeeLoneDruid
 
             try
             {
-                new item_orchid(BearHero, HeroTarget);
-
-                new item_bloodthorn(BearHero, HeroTarget);
-
-                new item_mjollnir(BearHero, HeroTarget);
-
-                new item_mask_of_madness(BearHero, HeroTarget);
-
-                new item_abyssal_blade(BearHero, HeroTarget);
-
-                new item_nullifier(BearHero, HeroTarget);
-
-                new item_medallion_of_courage(BearHero, HeroTarget);
-
-                new item_solar_crest(BearHero, HeroTarget);
-
-                new item_satanic(BearHero);
+                ItemsDinamic.CastDinamicItem(BearHero, HeroTarget, BearConfig.ListSpell);
 
             }
             catch (Exception)
@@ -195,7 +175,7 @@ namespace TeeLoneDruid
         {
             if (e.Value)
             {
-
+                InputManager.MouseKeyDown -= InputManager_MouseKeyDown;
                 UpdateManager.IngameUpdate += BearComboUpdate;
             }
             else
@@ -206,6 +186,7 @@ namespace TeeLoneDruid
                 }
                 
                 HeroTarget = null;
+                InputManager.MouseKeyDown += InputManager_MouseKeyDown;
                 UpdateManager.IngameUpdate -= BearComboUpdate;
             }
         }
