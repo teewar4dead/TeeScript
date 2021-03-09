@@ -36,32 +36,20 @@ namespace Tee.ShadowFiend
             var Pos2 = GetSet.MyHero.Position + (vector2Polar.ToVector3() * 450);
             var Pos3 = GetSet.MyHero.Position + (vector2Polar.ToVector3() * 700);
 
-            if (!GetSet.Target.IsAttackImmune() && !AttackSleep.Sleeping)
-            {
-                if (GlobalMenu.HitRun.Value)
-                {
-                    OrbwalkerManager.OrbwalkTo(GetSet.Target);
-                }
-                else
-                {
-                    GetSet.MyHero.Attack(GetSet.Target);
-                }
-                AttackSleep.Sleep(800);
-            }
-            if (Pos1.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell1, GetSet.MyHero) && !OrdSleeper1.Sleeping)
+            if (Pos1.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell1, GetSet.MyHero) && !OrdSleeper1.Sleeping && Helper.FindModifier(GetSet.Target, "modifier_eul_cyclone") == null)
             {
                 
                 spell1.Cast();
                 OrdSleeper1.Sleep(670);
             }
 
-            if (Pos2.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell2, GetSet.MyHero) && !OrdSleeper2.Sleeping)
+            if (Pos2.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell2, GetSet.MyHero) && !OrdSleeper2.Sleeping && Helper.FindModifier(GetSet.Target, "modifier_eul_cyclone") == null)
             {
                 spell2.Cast();
                 OrdSleeper2.Sleep(670);
             }
            
-            if (Pos3.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell3, GetSet.MyHero) && !OrdSleeper3.Sleeping)
+            if (Pos3.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell3, GetSet.MyHero) && !OrdSleeper3.Sleeping && Helper.FindModifier(GetSet.Target, "modifier_eul_cyclone") == null)
             {
                 spell3.Cast();
                 OrdSleeper3.Sleep(670);
