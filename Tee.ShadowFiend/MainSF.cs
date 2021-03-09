@@ -13,7 +13,7 @@ namespace Tee.ShadowFiend
     class MainSF
     {
 
-        private Vector2 MovePanel = new Vector2((RendererManager.ScreenSize.X / 100) * 50 + GlobalMenu.VectorX, (RendererManager.ScreenSize.Y / 100) * 50 + GlobalMenu.VectorY);
+
         public MainSF()
         {
             PanelClick.SelectItem4 = true;
@@ -80,6 +80,8 @@ namespace Tee.ShadowFiend
 
         private void ComboMenuThisDraw()
         {
+            Console.WriteLine("Dd");
+            var MovePanel = new Vector2((RendererManager.ScreenSize.X / 100) * 50 + GlobalMenu.VectorX, (RendererManager.ScreenSize.Y / 100) * 50 + GlobalMenu.VectorY);
             var scaling = RendererManager.Scaling;
             var combo = new[] { AbilityId.item_cyclone, AbilityId.item_abyssal_blade, AbilityId.item_arcane_blink };
             var rect = new RectangleF(MovePanel.X, MovePanel.Y, ((4 * 82) + 2) * scaling, 88 * scaling);

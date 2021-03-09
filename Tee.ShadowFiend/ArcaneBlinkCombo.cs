@@ -63,8 +63,8 @@ namespace Tee.ShadowFiend
             }
             if (!UltimateSleeper.Sleeping)
             {
-                var Ethereal = Helper.FindItemMain(GetSet.MyHero, AbilityId.item_ethereal_blade);
-                DynamicCombo.DynamicItemCastForLinka(Helper.CanBeCasted(AbilityId.item_sphere, GetSet.Target), Ethereal.Id);
+               
+                DynamicCombo.DynamicItemCastForLinka(Helper.CanBeCasted(AbilityId.item_sphere, GetSet.Target), AbilityId.item_ethereal_blade);
 
                 OrdSleeper.Sleep(100);
                 GetSet.Ultimate.Cast();
