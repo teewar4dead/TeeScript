@@ -19,7 +19,7 @@ namespace Tee.ShadowFiend
             && x.IsAlive 
             && x.IsVisible 
             && x.IsValid 
-            && !x.IsIllusion 
+            && !x.IsIllusion
             && x.Distance2D(GameManager.MousePosition) < 750).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
         }
     }
