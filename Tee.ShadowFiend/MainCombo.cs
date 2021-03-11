@@ -220,8 +220,7 @@ namespace Tee.ShadowFiend
                 return;
             }
             var MyHeroHpPrc = (GetSet.MyHero.MaximumHealth / 100) * 30;
-            if (GlobalMenu.MainCombo.Value || GlobalMenu.UltComboKey.Value)
-            {
+
                 if (item_arcane_ring != null && Helper.CanBeCasted(item_arcane_ring, MyHero) && GlobalMenu.ListItemsToggler.FirstOrDefault(x => x.Key == item_arcane_ring.Id).Value)
                 {
                     item_arcane_ring.Cast();
@@ -302,8 +301,6 @@ namespace Tee.ShadowFiend
                 {
                     item_spider_legs.Cast();
                 }
-
-            }
 
             
 
