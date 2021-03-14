@@ -86,7 +86,7 @@ namespace Tee.Snatcher
             }
             else if (Aegis != null && GlobalMenu.ListRuneToggler["Aegis"] && MyHero.Inventory.FreeBackpackSlots.Count() != 0 && MyHero.ActiveShop != ShopType.Base && !Sleeper1.Sleeping)
             {
-                Console.WriteLine("Yes");
+
                 MyHero.Inventory.Move(MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x=> x.IsSellable), MyHero.Inventory.FreeBackpackSlots.FirstOrDefault());
                 Sleeper1.Sleep(1000);
 
@@ -96,7 +96,7 @@ namespace Tee.Snatcher
                 var item = MyHero.Inventory.Items.OrderBy(x => x.Cost).FirstOrDefault(x => x.Id != AbilityId.item_tpscroll && x.Cost < 449);
                 if (item != null)
                 {
-                    Console.WriteLine("1");
+                    
                     MyHero.Drop(item, MyHero.Position);
                 }
             }
@@ -109,7 +109,6 @@ namespace Tee.Snatcher
 
                 MyHero.PickUp(Cheese);
                 Sleeper22.Sleep(150);
-                Console.WriteLine("2");
             }
 
 
@@ -120,7 +119,6 @@ namespace Tee.Snatcher
             {
                 MyHero.PickUp(Refresher);
                 Sleeper33.Sleep(150);
-                Console.WriteLine("3");
             }
 
 
@@ -130,13 +128,11 @@ namespace Tee.Snatcher
             {
                 MyHero.PickUp(Aghanim);
                 Sleeper44.Sleep(150);
-                Console.WriteLine("4");
             }
             else if (Aghanim != null && GlobalMenu.ListRuneToggler["Aghanim"] && MyHero.Inventory.FreeBackpackSlots.Count() != 0 && MyHero.ActiveShop != ShopType.Base && !Sleeper2.Sleeping)
             {
                 MyHero.Inventory.Move(MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable), MyHero.Inventory.GetFreeSlots(ItemSlot.BackPack_1, ItemSlot.BackPack_3).FirstOrDefault());
                 Sleeper2.Sleep(1000);
-                Console.WriteLine("5");
             }
 
 
@@ -144,13 +140,11 @@ namespace Tee.Snatcher
 
             if (Gem != null && GlobalMenu.ListRuneToggler["Gem"] && (MyHero.Inventory.FreeMainSlots.Count() != 0) && MyHero.ActiveShop != ShopType.Base && !Sleeper55.Sleeping)
             {
-                Console.WriteLine("6");
                 MyHero.PickUp(Gem);
                 Sleeper55.Sleep(150);
             }
             else if (Gem != null && GlobalMenu.ListRuneToggler["Gem"] && MyHero.Inventory.FreeBackpackSlots.Count() != 0 && MyHero.ActiveShop != ShopType.Base && !Sleeper3.Sleeping)
             {
-                Console.WriteLine("7");
                 MyHero.Inventory.Move(MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable), MyHero.Inventory.GetFreeSlots(ItemSlot.BackPack_1, ItemSlot.BackPack_3).FirstOrDefault());
                 Sleeper3.Sleep(1000);
             }
@@ -161,14 +155,12 @@ namespace Tee.Snatcher
 
             if (Rapier != null && GlobalMenu.ListRuneToggler["Rapier"] && (MyHero.Inventory.FreeMainSlots.Count() != 0) && MyHero.ActiveShop != ShopType.Base && !Sleeper66.Sleeping)
             {
-                Console.WriteLine("8");
                 MyHero.PickUp(Rapier);
                 Sleeper66.Sleep(150);
             }
             else if (Rapier != null && GlobalMenu.ListRuneToggler["Rapier"] && MyHero.Inventory.FreeBackpackSlots.Count() != 0 && MyHero.ActiveShop != ShopType.Base && !Sleeper4.Sleeping)
             {
 
-                Console.WriteLine("9");
                 MyHero.Inventory.Move(MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable), MyHero.Inventory.GetFreeSlots(ItemSlot.BackPack_1, ItemSlot.BackPack_3).FirstOrDefault());
                 Sleeper4.Sleep(1000);
             }
@@ -187,7 +179,6 @@ namespace Tee.Snatcher
             {
 
                 MyHero.PickUp(Neutrals);
-                Console.WriteLine(Neutrals?.Name); //
                 Sleeper77.Sleep(150);
             }
             else if (Neutrals != null && GlobalMenu.ListRuneToggler["Neutrals"] && MyHero.Inventory.FreeMainSlots.Count() != 0 && !Sleeper5.Sleeping && MyHero.ActiveShop != ShopType.Base)
@@ -195,7 +186,6 @@ namespace Tee.Snatcher
                 
                 if (MyHero.Inventory.Move(MyHero.Inventory.BackpackItems.FirstOrDefault(x => x.IsPurchasable), MyHero.Inventory.GetFreeSlots(ItemSlot.MainSlot_1, ItemSlot.MainSlot_6).FirstOrDefault()))
                 {
-                    Console.WriteLine("11");
                 }
                 Sleeper5.Sleep(1000);
             }
