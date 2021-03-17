@@ -151,8 +151,6 @@ namespace Tee.Snatcher
 
 
 
-            Console.WriteLine(MyHero.Inventory.FreeMainSlots.Count());
-
             if (Rapier != null && GlobalMenu.ListRuneToggler["Rapier"] && (MyHero.Inventory.FreeMainSlots.Count() != 0) && MyHero.ActiveShop != ShopType.Base && !Sleeper66.Sleeping)
             {
                 MyHero.PickUp(Rapier);
