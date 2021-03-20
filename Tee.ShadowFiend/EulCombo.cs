@@ -99,6 +99,7 @@ namespace Tee.ShadowFiend
                     {
                         PhaseBoots.Cast();
                     }
+
                     GetSet.MyHero.Move(GetSet.Target.Position);
                 }
 
@@ -109,7 +110,6 @@ namespace Tee.ShadowFiend
             if (ModifierCyclone != null && GetSet.MyHero.Position.Distance2D(GetSet.Target.Position) <= 150 && ModifierCyclone.RemainingTime <= (CastTime + PingGame) && !UltimateSleeper.Sleeping)
             {
                
-                GetSet.MyHero.Move(GetSet.Target.Position);
                 UltimateSleeper.Sleep(250);
                 if (GetSet.Ultimate.Cast())
                 {

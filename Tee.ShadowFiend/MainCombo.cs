@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Divine.SDK.Orbwalker;
 
 namespace Tee.ShadowFiend
 {
@@ -331,7 +332,15 @@ namespace Tee.ShadowFiend
 
             if (!Target.IsAttackImmune())
             {
-                MyHero.Attack(Target);
+                if (GlobalMenu.HitRun.Value)
+                {
+                    OrbwalkerManager.Attack(Target);
+                }
+                else
+                {
+                    MyHero.Attack(Target);
+                }
+                
             }
             else
             {
