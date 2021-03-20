@@ -109,7 +109,7 @@ namespace Tee.ShadowFiend
             var CastTime = ModifierArcaneBlink != null ? (GetSet.Ultimate.CastPoint / 100) * 50 : GetSet.Ultimate.CastPoint;
             if (ModifierCyclone != null && GetSet.MyHero.Position.Distance2D(GetSet.Target.Position) <= 150 && ModifierCyclone.RemainingTime <= (CastTime + PingGame) && !UltimateSleeper.Sleeping)
             {
-               
+
                 UltimateSleeper.Sleep(250);
                 if (GetSet.Ultimate.Cast())
                 {

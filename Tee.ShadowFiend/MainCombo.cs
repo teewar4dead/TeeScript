@@ -329,12 +329,11 @@ namespace Tee.ShadowFiend
             }
 
 
-
             if (!Target.IsAttackImmune())
             {
                 if (GlobalMenu.HitRun.Value)
                 {
-                    OrbwalkerManager.Attack(Target);
+                    OrbwalkerManager.OrbwalkTo(Target, Target.Position);
                 }
                 else
                 {
