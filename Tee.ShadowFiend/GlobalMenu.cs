@@ -19,7 +19,8 @@ namespace Tee.ShadowFiend
         public static MenuHoldKey UltComboKey { get; set; }
         public static MenuHoldKey AutoRazeKey { get; set; }
         public static MenuSwitcher AutoRazeMouseKey { get; set; }
-        //public static MenuSwitcher PauseGame { get; set; }
+        public static MenuSwitcher PauseGame { get; set; }
+        public static MenuSwitcher UltGameChat { get; set; }
         public static MenuSwitcher ShowRadiusRaze { get; set; }
         public static MenuSwitcher LinkaShow { get; set; }
         public static MenuSlider VectorX { get; set; }
@@ -84,8 +85,10 @@ namespace Tee.ShadowFiend
             AutoRazeKey.SetAbilityTexture(AbilityId.nevermore_shadowraze1);
             AutoRazeMouseKey = RootMenu.CreateSwitcher("Auto Raze is mouse", true);
             AutoRazeMouseKey.SetAbilityTexture(AbilityId.nevermore_shadowraze1);
-            //PauseGame = RootMenu.CreateSwitcher("Pause game at Killing", true);
-            //PauseGame.SetAbilityTexture(AbilityId.item_cyclone);
+            PauseGame = RootMenu.CreateSwitcher("Pause game at Killing", true);
+            PauseGame.SetAbilityTexture(AbilityId.item_cyclone);
+            UltGameChat = RootMenu.CreateSwitcher("Send to chat \"?\"", true);
+            UltGameChat.SetAbilityTexture(AbilityId.nevermore_requiem);
             ShowRadiusRaze = RootMenu.CreateSwitcher("Show Raze Radius", true);
             ShowRadiusRaze.SetAbilityTexture(AbilityId.nevermore_shadowraze3);
             var panel = RootMenu.CreateMenu("Panel settings");
