@@ -72,7 +72,6 @@ namespace Tee.ShadowFiend
         public static void DynamicItem()
         {
 
-            
             if (GetSet.Target == null || !GetSet.Target.IsValid || !GetSet.Target.IsAlive)
             {
                 GetSet.Target = TargetSelector.ClosestToMouse(GetSet.MyHero);
@@ -83,6 +82,11 @@ namespace Tee.ShadowFiend
             if (item_arcane_ring == null || !item_arcane_ring.IsValid)
             {
                 item_arcane_ring = Helper.FindItemMain(GetSet.MyHero, AbilityId.item_arcane_ring);
+            }
+
+            if (item_bkb == null || !item_bkb.IsValid)
+            {
+                item_bkb = Helper.FindItemMain(GetSet.MyHero, AbilityId.item_black_king_bar);
             }
 
             if (item_bloodthorn == null || !item_bloodthorn.IsValid)
@@ -179,10 +183,10 @@ namespace Tee.ShadowFiend
                 item_silver_edge.Cast();
                 return;
             }
-            if(Helper.FindModifier(MyHero, "modifier_item_silver_edge_windwalk")!= null)
+            if (Helper.FindModifier(MyHero, "modifier_item_silver_edge_windwalk") != null)
             {
 
-               
+
                 return;
             }
             LinkaUpdate();
@@ -220,7 +224,9 @@ namespace Tee.ShadowFiend
             {
                 return;
             }
-            var MyHeroHpPrc = (GetSet.MyHero.MaximumHealth / 100) * 30;
+            if (!GlobalMenu.AutoRazeKey)
+            {
+                var MyHeroHpPrc = (GetSet.MyHero.MaximumHealth / 100) * 30;
 
                 if (item_arcane_ring != null && Helper.CanBeCasted(item_arcane_ring, MyHero) && GlobalMenu.ListItemsToggler.FirstOrDefault(x => x.Key == item_arcane_ring.Id).Value)
                 {
@@ -241,6 +247,10 @@ namespace Tee.ShadowFiend
                         item_bullwhip.Cast(MyHero);
                     }
 
+                }
+                if (item_bkb != null && Helper.CanBeCasted(item_bkb, MyHero) && GlobalMenu.ListItemsToggler.FirstOrDefault(x => x.Key == item_bkb.Id).Value && MyHero.Position.Distance2D(Target.Position) <= 600)
+                {
+                    item_bkb.Cast();
                 }
                 if (item_diffusal_blade != null && Helper.CanBeCasted(item_diffusal_blade, MyHero) && GlobalMenu.ListItemsToggler.FirstOrDefault(x => x.Key == item_diffusal_blade.Id).Value)
                 {
@@ -302,30 +312,27 @@ namespace Tee.ShadowFiend
                 {
                     item_spider_legs.Cast();
                 }
+            }
 
-            
+
 
 
             if (Pos1.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell1, GetSet.MyHero) && !OrdSleeperSpell1.Sleeping && Helper.FindModifier(GetSet.Target, "modifier_eul_cyclone") == null)
             {
-
                 spell1.Cast();
                 OrdSleeperSpell1.Sleep(600);
-               
             }
 
             if (Pos2.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell2, GetSet.MyHero) && !OrdSleeperSpell2.Sleeping && Helper.FindModifier(GetSet.Target, "modifier_eul_cyclone") == null)
             {
                 spell2.Cast();
                 OrdSleeperSpell2.Sleep(600);
-              
             }
 
             if (Pos3.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell3, GetSet.MyHero) && !OrdSleeperSpell3.Sleeping && Helper.FindModifier(GetSet.Target, "modifier_eul_cyclone") == null)
             {
                 spell3.Cast();
                 OrdSleeperSpell3.Sleep(600);
-                
             }
 
 
@@ -339,11 +346,11 @@ namespace Tee.ShadowFiend
                 {
                     MyHero.Attack(Target);
                 }
-                
+
             }
             else
             {
-                if(MyHero.Position.Distance2D(Target.Position) <= 550)
+                if (MyHero.Position.Distance2D(Target.Position) <= 550)
                 {
                     MyHero.MoveToDirection(MyHero.Position.Extend(Target.Position, 1));
                 }
@@ -351,7 +358,7 @@ namespace Tee.ShadowFiend
                 {
                     MyHero.MoveToDirection(MyHero.Position.Extend(Target.Position, 35));
                 }
-                
+
             }
 
             OrdSleeperItem.Sleep(280);

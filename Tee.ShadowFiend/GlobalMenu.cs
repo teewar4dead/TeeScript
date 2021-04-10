@@ -23,8 +23,6 @@ namespace Tee.ShadowFiend
         public static MenuSwitcher UltGameChat { get; set; }
         public static MenuSwitcher ShowRadiusRaze { get; set; }
         public static MenuSwitcher LinkaShow { get; set; }
-        public static MenuSlider VectorX { get; set; }
-        public static MenuSlider VectorY { get; set; }
         public static readonly Hero SFhero = EntityManager.LocalHero;
         public static Dictionary<AbilityId, bool> ListSpellsToggler = new Dictionary<AbilityId, bool>
             {
@@ -34,6 +32,7 @@ namespace Tee.ShadowFiend
             };
         public static Dictionary<AbilityId, bool> ListItemsToggler = new Dictionary<AbilityId, bool>
             {
+                { AbilityId.item_black_king_bar,true},
                 { AbilityId.item_phase_boots,true},
                 { AbilityId.item_orchid,true},
                 { AbilityId.item_bloodthorn,true},
@@ -80,7 +79,7 @@ namespace Tee.ShadowFiend
             LinkenMenu.CreateSpellToggler("", ListLinkenToggler);
             LinkenMenu.SetAbilityTexture(AbilityId.item_sphere);
             UltComboKey = RootMenu.CreateHoldKey("Ult Combo", Key.None);
-            UltComboKey.SetAbilityTexture(AbilityId.nevermore_requiem);
+            UltComboKey.SetAbilityTexture(AbilityId.item_cyclone);
             AutoRazeKey = RootMenu.CreateHoldKey("Auto Raze", Key.None);
             AutoRazeKey.SetAbilityTexture(AbilityId.nevermore_shadowraze1);
             AutoRazeMouseKey = RootMenu.CreateSwitcher("Auto Raze is mouse", true);
@@ -91,9 +90,6 @@ namespace Tee.ShadowFiend
             UltGameChat.SetAbilityTexture(AbilityId.nevermore_requiem);
             ShowRadiusRaze = RootMenu.CreateSwitcher("Show Raze Radius", true);
             ShowRadiusRaze.SetAbilityTexture(AbilityId.nevermore_shadowraze3);
-            var panel = RootMenu.CreateMenu("Panel settings");
-            VectorX = panel.CreateSlider("X", 0, 0, (int)RendererManager.ScreenSize.X);
-            VectorY = panel.CreateSlider("Y", 0, 0, (int)RendererManager.ScreenSize.Y);
             new MainSF();
         }
     }

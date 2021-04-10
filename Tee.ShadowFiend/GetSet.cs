@@ -38,6 +38,7 @@ namespace Tee.ShadowFiend
         public static Item item_arcane_ring;
         public static Item item_bullwhip;
         public static Item item_spider_legs;
+        public static Item item_bkb;
 
 
 

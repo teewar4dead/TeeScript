@@ -24,7 +24,10 @@ namespace Tee.ShadowFiend
 
             if (MoveMouse)
             {
-                GetSet.MyHero.Move(GameManager.MousePosition);
+                if (GetSet.MyHero.Position.Distance2D(GetSet.Target.Position) >= 50)
+                {
+                    GetSet.MyHero.Move(GetSet.Target.Position);
+                }
                 MoveMouse = false;
             }
 
@@ -62,14 +65,17 @@ namespace Tee.ShadowFiend
             {
                 if (GlobalMenu.UltGameChat.Value)
                 {
-                    GameManager.ExecuteCommand("Say: ?");
+                    GameManager.ExecuteCommand("Say ?");
                 }
                 return;
             }
             if ((GetSet.Blink != null && Helper.CanBeCasted(GetSet.Blink, GetSet.MyHero) && Helper.CanBeCasted(GetSet.Eul, GetSet.MyHero) && !BlinkSleeper.Sleeping) && GetSet.MyHero.Position.Distance2D(GetSet.Target.Position) <= GetSet.Blink.AbilitySpecialData.FirstOrDefault(x => x.Name == "blink_range").Value + AbilityExtensions.GetCastRange(GetSet.Blink))
             {
                 BlinkSleeper.Sleep(250);
-                GetSet.Blink.Cast(GetSet.Target.Position);
+                if (GetSet.Blink.Cast(GetSet.Target.Position))
+                {
+                    GetSet.MyHero.Move(GetSet.Target.Position);
+                }
             }
 
 
@@ -77,12 +83,12 @@ namespace Tee.ShadowFiend
             if ((GetSet.ArcaneBlink != null && Helper.CanBeCasted(GetSet.ArcaneBlink, GetSet.MyHero) && Helper.CanBeCasted(GetSet.Eul, GetSet.MyHero) && !BlinkSleeper.Sleeping) && GetSet.MyHero.Position.Distance2D(GetSet.Target.Position) <= GetSet.ArcaneBlink.AbilitySpecialData.FirstOrDefault(x => x.Name == "blink_range").Value + AbilityExtensions.GetCastRange(GetSet.ArcaneBlink))
             {
                 BlinkSleeper.Sleep(250);
-                GetSet.ArcaneBlink.Cast(GetSet.Target.Position);
+                if (GetSet.ArcaneBlink.Cast(GetSet.Target.Position))
+                {
+                    GetSet.MyHero.Move(GetSet.Target.Position);
+                }
             }
 
-
-
-                GetSet.MyHero.Move(GetSet.Target.Position);
             var ModifierCyclone = Helper.FindModifier(GetSet.Target, "modifier_eul_cyclone");
 
             if (GetSet.MyHero.Position.Distance2D(GetSet.Target.Position) <= GetSet.MyHero.Speed && Helper.CanBeCasted(GetSet.Eul, GetSet.MyHero) && !EulSleeper.Sleeping)
@@ -94,15 +100,21 @@ namespace Tee.ShadowFiend
                 else
                 {
                     EulSleeper.Sleep(250);
-                    GetSet.Eul.Cast(GetSet.Target);
+                    if (GetSet.Eul.Cast(GetSet.Target))
+                    {
+                        GetSet.MyHero.Move(GetSet.Target.Position);
+                    }
 
                     var PhaseBoots = Helper.FindItemMain(GetSet.MyHero, AbilityId.item_phase_boots);
-                    if (PhaseBoots != null)
+                    var item_bkb = Helper.FindItemMain(GetSet.MyHero, AbilityId.item_black_king_bar);
+                    if (PhaseBoots != null && Helper.CanBeCasted(PhaseBoots, GetSet.MyHero))
                     {
                         PhaseBoots.Cast();
                     }
-
-                    GetSet.MyHero.Move(GetSet.Target.Position);
+                    if (item_bkb != null && Helper.CanBeCasted(GetSet.item_bkb, GetSet.MyHero) && GlobalMenu.ListItemsToggler.FirstOrDefault(x => x.Key == GetSet.item_bkb.Id).Value && GetSet.MyHero.Position.Distance2D(GetSet.Target.Position) <= 600)
+                    {
+                        GetSet.item_bkb.Cast();
+                    }
                     if (GlobalMenu.PauseGame.Value)
                     {
                         GameManager.ExecuteCommand("dota_pause");
