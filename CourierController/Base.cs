@@ -32,7 +32,10 @@ namespace CourierController
             var MyHeroCheckFreeBackPackSlots = MyHero.Inventory.GetFreeSlots(ItemSlot.BackPack_1, ItemSlot.BackPack_3).Count() == 0;
             var MyHeroCheckFreeBackMainSlots = MyHero.Inventory.GetFreeSlots(ItemSlot.MainSlot_1, ItemSlot.MainSlot_6).Count() == 0;
             var SelectedCourier = MyHero.Player.SelectedUnits.Where(x => x.Handle == MyCourier.Handle).FirstOrDefault();
+            Console.WriteLine(MyCourier.Position);
             var allheroEnemyRadiusCourier = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(MyCourier.Position) < 2000).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
+            var allheroEnemyRadiusFontanDire = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(6263, 5764, 256)) < 1500).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
+            var allheroEnemyRadiusFontanRadiant = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(-6339, -5807, 256)) < 1500).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
             if (GlobalMenu.CourierBuyWard && MyCourier.ActiveShop == ShopType.Base && ObserverDire.StockCount != 0)
             {
                 var Item = MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_ward_observer);
@@ -69,24 +72,31 @@ namespace CourierController
             {
                 SpellCourierBurst.Cast();
             }
-            if(GlobalMenu.CourierFontan && (MyCourier.State == CourierState.AtBase && MyCourier.State != CourierState.Move && MyCourier.State != CourierState.Deliver) && SelectedCourier == null && MyCourier.ActiveShop == ShopType.Base && allheroEnemyRadiusCourier == null)
+            if(GlobalMenu.CourierFontan && (MyCourier.State == CourierState.AtBase && MyCourier.State != CourierState.Move && MyCourier.State != CourierState.Deliver) && SelectedCourier == null && MyCourier.ActiveShop == ShopType.Base)
             {
-                if(MyHero.Team == Team.Radiant)
+                if(MyHero.Team == Team.Radiant && allheroEnemyRadiusFontanRadiant == null)
                 {
                     MyCourier.Move(new Vector3(-6339, -5807, 256));
                 }
-                else if(MyHero.Team == Team.Dire)
+                else if(MyHero.Team == Team.Dire && allheroEnemyRadiusFontanDire == null)
                 {
                     MyCourier.Move(new Vector3(6263 ,5764, 256));
                     
                 }
             }
-            else if (GlobalMenu.CourierFontan && ( MyCourier.State != CourierState.Move && MyCourier.State != CourierState.Deliver) && SelectedCourier == null && MyCourier.ActiveShop == ShopType.Base && allheroEnemyRadiusCourier != null)
+            else if (GlobalMenu.CourierFontan && ( MyCourier.State != CourierState.Move && MyCourier.State != CourierState.Deliver) && SelectedCourier == null && MyCourier.ActiveShop == ShopType.Base)
             {
-                if(MyCourier.State != CourierState.AtBase)
+
+                if (MyHero.Team == Team.Radiant && allheroEnemyRadiusFontanRadiant != null)
                 {
-                    SpellCourierHome.Cast();
+                    MyCourier.Move(new Vector3(-6928, -6528, 384));
                 }
+                else if (MyHero.Team == Team.Dire && allheroEnemyRadiusFontanDire != null)
+                {
+                    MyCourier.Move(new Vector3(7008, 6387, 392));
+                }
+
+
             }
             if (GlobalMenu.CourierMoveSlot && !MyHeroCheckFreeBackPackSlots && MyCourier.Distance2D(MyHero.Position) <= 1000 && MyCourier.State == CourierState.Deliver && !sleeperMoveItem.Sleeping)
             {
@@ -94,11 +104,11 @@ namespace CourierController
                 {
                     //nothing
                 }
-                else
+                else if(MyHero.Inventory.MainItems.Count() == 6)
                 {
-                    MyHero.Inventory.Move(MyHero.Inventory.MainItems.OrderBy(x => x.Cost < 449).FirstOrDefault(x => x.IsSellable), MyHero.Inventory.FreeBackpackSlots.FirstOrDefault());
+                    MyHero.Inventory.Move(MyHero.Inventory.MainItems.OrderBy(x => x.Cost <= 450 ).FirstOrDefault(x => x.IsSellable), MyHero.Inventory.FreeBackpackSlots.FirstOrDefault());
                 }
-                sleeperMoveItem.Sleep(1500);
+                sleeperMoveItem.Sleep(5000);
             }
             if(GlobalMenu.CourierShield  && allheroEnemyRadiusCourier!= null && SpellCourierShield.Cooldown == 0 && MyCourier.Level >= 20)
             {
