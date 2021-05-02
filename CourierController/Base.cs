@@ -20,6 +20,7 @@ namespace CourierController
         {
             var MyHero = EntityManager.LocalHero;
             var MyCourier = EntityManager.GetEntities<Courier>().Where(x => x.IsAlive && x.IsControllable).FirstOrDefault();
+            if (MyCourier == null || MyHero == null || sleeper.Sleeping) return;
             var SpellCourierBurst = MyCourier.Spellbook.GetSpellById(AbilityId.courier_burst);
             var SpellCourierHome = MyCourier.Spellbook.GetSpellById(AbilityId.courier_return_stash_items);
             var SpellCourierShield = MyCourier.Spellbook.GetSpellById(AbilityId.courier_shield);
@@ -31,7 +32,6 @@ namespace CourierController
             var MyHeroCheckFreeBackMainSlots = MyHero.Inventory.GetFreeSlots(ItemSlot.MainSlot_1, ItemSlot.MainSlot_6).Count() == 0;
             var SelectedCourier = MyHero.Player.SelectedUnits.Where(x => x.Handle == MyCourier.Handle).FirstOrDefault();
             var allheroEnemyRadiusCourier = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(MyCourier.Position) < 1500).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
-            if (MyCourier == null || MyHero == null || sleeper.Sleeping) return;
             if (GlobalMenu.CourierBuyWard && MyCourier.ActiveShop == ShopType.Base && Observer.StockCount != 0)
             {
                 var Item = MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_ward_observer);
