@@ -22,7 +22,8 @@ namespace CourierController
             var MyCourier = EntityManager.GetEntities<Courier>().Where(x => x.IsAlive && x.IsControllable && x.Owner == MyHero.Owner).FirstOrDefault();
             if (MyCourier == null || MyHero == null || sleeper.Sleeping) return;
             if (!MyCourier.IsAlive) return;
-            
+
+            var DistanceFountain = 3000;
             var SpellCourierBurst = MyCourier.Spellbook.GetSpellById(AbilityId.courier_burst);
             var SpellCourierHome = MyCourier.Spellbook.GetSpellById(AbilityId.courier_return_stash_items);
             var SpellCourierShield = MyCourier.Spellbook.GetSpellById(AbilityId.courier_shield);
@@ -33,9 +34,8 @@ namespace CourierController
             var CourierCheckFreeSlots = MyCourier.Inventory.GetFreeSlots(ItemSlot.MainSlot_1, ItemSlot.BackPack_3).Count() == 0;
             var SelectedCourier = MyHero.Player.SelectedUnits.Where(x => x.Handle == MyCourier.Handle).FirstOrDefault();
             var allheroEnemyRadiusCourier = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(MyCourier.Position) < 2000).FirstOrDefault();
-            var allheroEnemyRadiusFontanDire = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(6263, 5764, 256)) < 1500).FirstOrDefault();
-            var allheroEnemyRadiusFontanRadiant = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(-6339, -5807, 256)) < 1500).FirstOrDefault();
-            
+            var allheroEnemyRadiusFontanDire = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(6263, 5764, 256)) < DistanceFountain).FirstOrDefault();
+            var allheroEnemyRadiusFontanRadiant = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(-6339, -5807, 256)) < DistanceFountain).FirstOrDefault();
             if (GlobalMenu.CourierBuyWard && MyCourier.ActiveShop == ShopType.Base && ObserverDire.StockCount != 0)
             {
                 var Item = MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_ward_observer);
@@ -108,27 +108,29 @@ namespace CourierController
 
             }
             
-            if (GlobalMenu.CourierMoveSlot && MyCourier.Distance2D(MyHero.Position) <= 1000 && MyCourier.State == CourierState.Deliver && !sleeperMoveItem.Sleeping && MyHero.IsAlive)
-            {
-                var MoveItems = MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable && x.Cost <= 450 && x.IsValid);
-                if (MyCourier.Inventory.MainItems.Count() == 1 && TPCourier != null || (MyCourier.Inventory.MainItems.Count() == 1 && ObserverCourier != null))
-                {
-                    //nothing
-                }
-                
-                else if (MyHero.Inventory.FreeMainSlots.Count() == 0 && MyHero.Inventory.FreeBackpackSlots.Count() > 0 && MoveItems != null && !sleeperMoveItem.Sleeping)
-                {
-                    
-                    MyHero.Inventory.Move(MoveItems, MyHero.Inventory.FreeBackpackSlots.FirstOrDefault());
-                    sleeperMoveItem.Sleep(10000);
-                }
-            }
             
             if(GlobalMenu.CourierShield  && allheroEnemyRadiusCourier!= null && SpellCourierShield.Cooldown == 0 && MyCourier.Level >= 20)
             {
                 if((allheroEnemyRadiusCourier.NetworkActivity == NetworkActivity.Attack || allheroEnemyRadiusCourier.NetworkActivity == NetworkActivity.Attack2)&& MyCourier.Distance2D(allheroEnemyRadiusCourier.Position) <= allheroEnemyRadiusCourier.AttackRange)
                 SpellCourierShield.Cast();
             
+            }
+
+            if (GlobalMenu.CourierMoveSlot && MyCourier.Distance2D(MyHero.Position) <= 1000 && MyCourier.State == CourierState.Deliver && !sleeperMoveItem.Sleeping && MyHero.IsAlive)
+            {
+                var MoveItems = MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable && x.Cost <= 450 && x.IsValid);
+                if (MoveItems == null) return;
+                if (MyCourier.Inventory.MainItems.Count() == 1 && TPCourier != null || (MyCourier.Inventory.MainItems.Count() == 1 && ObserverCourier != null))
+                {
+                    //nothing
+                }
+
+                else if (MyHero.Inventory.FreeMainSlots.Count() == 0 && MyHero.Inventory.FreeBackpackSlots.Count() > 0 && MoveItems != null && !sleeperMoveItem.Sleeping)
+                {
+
+                    MyHero.Inventory.Move(MoveItems, MyHero.Inventory.FreeBackpackSlots.FirstOrDefault());
+                    sleeperMoveItem.Sleep(10000);
+                }
             }
             sleeper.Sleep(100);
         }
