@@ -32,9 +32,9 @@ namespace CourierController
             var TPCourier =  MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_tpscroll);
             var CourierCheckFreeSlots = MyCourier.Inventory.GetFreeSlots(ItemSlot.MainSlot_1, ItemSlot.BackPack_3).Count() == 0;
             var SelectedCourier = MyHero.Player.SelectedUnits.Where(x => x.Handle == MyCourier.Handle).FirstOrDefault();
-            var allheroEnemyRadiusCourier = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(MyCourier.Position) < 2000).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
-            var allheroEnemyRadiusFontanDire = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(6263, 5764, 256)) < 1500).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
-            var allheroEnemyRadiusFontanRadiant = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(-6339, -5807, 256)) < 1500).OrderBy(x => x.Distance2D(GameManager.MousePosition)).FirstOrDefault();
+            var allheroEnemyRadiusCourier = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(MyCourier.Position) < 2000).FirstOrDefault();
+            var allheroEnemyRadiusFontanDire = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(6263, 5764, 256)) < 1500).FirstOrDefault();
+            var allheroEnemyRadiusFontanRadiant = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(new Vector3(-6339, -5807, 256)) < 1500).FirstOrDefault();
             
             if (GlobalMenu.CourierBuyWard && MyCourier.ActiveShop == ShopType.Base && ObserverDire.StockCount != 0)
             {
@@ -116,10 +116,11 @@ namespace CourierController
                     //nothing
                 }
                 
-                else if (MyHero.Inventory.FreeMainSlots.Count() == 0 && MyHero.Inventory.FreeBackpackSlots.Count() > 0 && MoveItems != null)
+                else if (MyHero.Inventory.FreeMainSlots.Count() == 0 && MyHero.Inventory.FreeBackpackSlots.Count() > 0 && MoveItems != null && !sleeperMoveItem.Sleeping)
                 {
                     
                     MyHero.Inventory.Move(MoveItems, MyHero.Inventory.FreeBackpackSlots.FirstOrDefault());
+                    sleeperMoveItem.Sleep(10000);
                 }
             }
             
