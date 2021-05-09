@@ -68,12 +68,12 @@ namespace CourierController
 
             
             }
-            if(GlobalMenu.CourierFast.Value == GlobalMenu.selectorRun[1] && MyCourier.State == CourierState.Deliver && MyCourier.ActiveShop == ShopType.Base && SpellCourierBurst.Cooldown == 0 && SpellCourierBurst.CastPoint != 0)
+            if(GlobalMenu.CourierFast.Value == GlobalMenu.selectorRun[1] && MyCourier.State == CourierState.Deliver && MyCourier.ActiveShop == ShopType.Base && SpellCourierBurst.Cooldown == 0 && MyCourier.Level >= 10)
             {
                 SpellCourierBurst.Cast();
             }
             
-            if (GlobalMenu.CourierFast.Value == GlobalMenu.selectorRun[2] && (MyCourier.State == CourierState.Deliver || MyCourier.State == CourierState.BackToBase) && SpellCourierBurst.Cooldown == 0 && SpellCourierBurst.CastPoint != 0)
+            if (GlobalMenu.CourierFast.Value == GlobalMenu.selectorRun[2] && (MyCourier.State == CourierState.Deliver || MyCourier.State == CourierState.BackToBase) && SpellCourierBurst.Cooldown == 0 && MyCourier.Level >= 10)
             {
                 SpellCourierBurst.Cast();
             }
@@ -115,17 +115,16 @@ namespace CourierController
                 SpellCourierShield.Cast();
             
             }
-
+            Console.WriteLine(MyHero.Inventory.FreeBackpackSlots.Count());
             if (GlobalMenu.CourierMoveSlot && MyCourier.Distance2D(MyHero.Position) <= 1000 && MyCourier.State == CourierState.Deliver && !sleeperMoveItem.Sleeping && MyHero.IsAlive)
             {
                 var MoveItems = MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable && x.Cost <= 450 && x.IsValid);
-                if (MoveItems == null) return;
                 if (MyCourier.Inventory.MainItems.Count() == 1 && TPCourier != null || (MyCourier.Inventory.MainItems.Count() == 1 && ObserverCourier != null))
                 {
                     //nothing
                 }
 
-                else if (MyHero.Inventory.FreeMainSlots.Count() == 0 && MyHero.Inventory.FreeBackpackSlots.Count() > 0 && MoveItems != null && !sleeperMoveItem.Sleeping)
+                else if (MyHero.Inventory.FreeMainSlots.Count() == 0 && (MyHero.Inventory.FreeBackpackSlots.Count() == 3 || MyHero.Inventory.FreeBackpackSlots.Count() == 2 || MyHero.Inventory.FreeBackpackSlots.Count() == 1) && MoveItems != null && !sleeperMoveItem.Sleeping)
                 {
 
                     MyHero.Inventory.Move(MoveItems, MyHero.Inventory.FreeBackpackSlots.FirstOrDefault());
