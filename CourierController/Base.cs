@@ -115,7 +115,6 @@ namespace CourierController
                 SpellCourierShield.Cast();
             
             }
-            Console.WriteLine(MyHero.Inventory.FreeBackpackSlots.Count());
             if (GlobalMenu.CourierMoveSlot && MyCourier.Distance2D(MyHero.Position) <= 1000 && MyCourier.State == CourierState.Deliver && !sleeperMoveItem.Sleeping && MyHero.IsAlive)
             {
                 var MoveItems = MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable && x.Cost <= 450 && x.IsValid);
