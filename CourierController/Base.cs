@@ -129,6 +129,8 @@ namespace CourierController
                     var TPCourier = MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_tpscroll);
                     var ItemAllnoRecipeNoNeutrals = MyCourier.Inventory.Items.Where(x => x.KeyValue.GetKeyValue("ItemIsNeutralDrop").GetBooleon() == false && !x.IsRecipe);
                     var MoveItems = MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable && x.Cost <= 450 && x.IsValid);
+
+
                     if (MyCourier.Inventory.MainItems.Count() == 1 && TPCourier != null || (MyCourier.Inventory.MainItems.Count() == 1 && ObserverCourier != null))
                     {
                         //nothing

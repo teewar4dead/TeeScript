@@ -3,7 +3,9 @@ using Divine.Menu;
 using Divine.Menu.Items;
 using Divine.SDK.Extensions;
 using Divine.SDK.Helpers;
+using Divine.SDK.Managers.Log;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
@@ -21,8 +23,9 @@ namespace AbuseTP
         {
 
             var RootMenu = MenuManager.CreateRootMenu("Tee.AbuseTP");
+            RootMenu.SetAbilityTexture(AbilityId.item_travel_boots);
             OnOff = RootMenu.CreateSwitcher("Enable");
-            Select = RootMenu.CreateSelector("Mode", new string[] { "Drop", "Stack" });
+            Select = RootMenu.CreateSelector("Mode", new string[] { "Drop to the ground", "Drop in courier" });
             RootMenu.CreateText("Buy TP (bag), need 2500 gold");
             Abuse = RootMenu.CreateHoldKey("lol", "Abuse Key", Key.None);
             OnOff.ValueChanged += OnOff_ValueChanged;
@@ -43,84 +46,90 @@ namespace AbuseTP
 
         private void Abuse_ValueChanged(MenuHoldKey holdKey, Divine.Menu.EventArgs.HoldKeyEventArgs e)
         {
-
             if (e.Value)
             {
                 if (MyHero.Player.UnreliableGold >= 2500 && MyHero.ActiveShop == ShopType.Base && !FindItem(MyHero, AbilityId.item_travel_boots))
                 {
-
                     UpdateManager.IngameUpdate += UpdateManager_IngameUpdate;
                 }
 
             }
-            else
-            {
-                UpdateManager.IngameUpdate -= UpdateManager_IngameUpdate;
-            }
         }
         private void UpdateManager_IngameUpdate()
         {
+
+            var MyCourier = EntityManager.GetEntities<Courier>().Where(x => x.IsControllable && x.Owner == MyHero.Owner).FirstOrDefault();
             if (SleeperOrder_1.Sleeping)
             {
                 return;
             }
-            if (MyHero == null)
+            if (MyHero == null || MyCourier == null)
             {
                 return;
             }
-            SleeperOrder_1.Sleep(150);
-            var courier = EntityManager.GetEntities<Courier>().Where(x => x.IsAlive && x.IsControllable).FirstOrDefault();
-            var shop = EntityManager.GetEntities<Shop>().FirstOrDefault(x => x.Position.Distance2D(MyHero.Position) <= 400);
 
+
+
+
+
+            if (Select.Value == "Drop in courier")
             {
                 if (!FindItem(MyHero, AbilityId.item_travel_boots))
                 {
-                    Player.Buy(MyHero, AbilityId.item_boots); // не работает
-                    Player.Buy(MyHero, AbilityId.item_recipe_travel_boots); // не работает
-                }
-
-
-
-                if (Select.Value == "Drop")
-                {
-                    foreach (var item in MyHero.Inventory.Items)
+                    if(MyCourier.IsAlive)
                     {
-                        if (item.Id == AbilityId.item_travel_boots)
-                        {
-                            Player.Sell(MyHero, item);
-                        }
-
+                        Player.Buy(MyHero, AbilityId.item_boots);
+                        Player.Buy(MyHero, AbilityId.item_recipe_travel_boots);
                     }
-                    MyHero.Drop(MyHero.Inventory.TownPortalScroll, MyHero.Position);
-                }
-                if (Select.Value == "Stack")
-                {
-                    courier.Move(MyHero.Position);
-                    if (courier.Position.Distance2D(MyHero.Position) <= 200)
+                    else
                     {
-                        foreach (var item in MyHero.Inventory.Items)
+                        UpdateManager.IngameUpdate -= UpdateManager_IngameUpdate;
+                    }
+                }
+
+                MyCourier.Move(MyHero.Position);
+                foreach (var item in MyHero.Inventory.Items)
+                {
+                    if (item.Id == AbilityId.item_travel_boots)
+                    {
+                        if (Player.Sell(MyHero, item) && !Abuse)
                         {
-                            if (item.Id == AbilityId.item_travel_boots)
+                            UpdateManager.IngameUpdate -= UpdateManager_IngameUpdate;
+                        }
+                    }
+
+                }
+                if (MyCourier.Position.Distance2D(MyHero.Position) <= 200)
+                {
+                    MyHero.Give(MyHero.Inventory.TownPortalScroll, MyCourier);
+                }
+            }
+            if (Select.Value == "Drop to the ground")
+            {
+                if (!FindItem(MyHero, AbilityId.item_travel_boots))
+                {
+                    Player.Buy(MyHero, AbilityId.item_boots);
+                    Player.Buy(MyHero, AbilityId.item_recipe_travel_boots);
+                }
+                foreach (var item in MyHero.Inventory.Items)
+                {
+                    if (item.Id == AbilityId.item_travel_boots)
+                    {
+                            if (Player.Sell(MyHero, item) && !Abuse)
                             {
-                                Player.Sell(MyHero, item);
+                                UpdateManager.IngameUpdate -= UpdateManager_IngameUpdate;
                             }
-
-                        }
-
-                        MyHero.Give(MyHero.Inventory.TownPortalScroll, courier);
-
                     }
+
                 }
-
-
-
+                MyHero.Drop(MyHero.Inventory.TownPortalScroll, MyHero.Position);
             }
 
-
-
-
+            SleeperOrder_1.Sleep(100);
 
         }
+
+
         public static bool FindItem(Unit unit, AbilityId abilityId)
         {
             var Item = unit.Inventory.Items.FirstOrDefault(x => x.Id == abilityId);
