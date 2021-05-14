@@ -21,8 +21,10 @@ namespace CourierController
         {
             var MyHero = EntityManager.LocalHero;
             var MyCourier = EntityManager.GetEntities<Courier>().Where(x => x.IsAlive && x.IsControllable && x.Owner == MyHero.Owner).FirstOrDefault();
-            if ((MyCourier == null || MyHero == null) && sleeper.Sleeping) return;
+            if (MyHero == null) return;
+            if (MyCourier == null) return;
             if (!MyCourier.IsAlive) return;
+            if (sleeper.Sleeping) return;
             try
             {
                 var DistanceFountain = 3000;
