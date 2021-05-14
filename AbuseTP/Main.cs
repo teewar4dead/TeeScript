@@ -25,7 +25,7 @@ namespace AbuseTP
             RootMenu.SetAbilityTexture(AbilityId.item_travel_boots);
             OnOff = RootMenu.CreateSwitcher("Enable");
             Select = RootMenu.CreateSelector("Mode", new string[] { "Drop to the ground", "Drop in courier" });
-            RootMenu.CreateText("Buy TP (bag), need 2500 gold");
+            RootMenu.CreateText("Buy TP (bugs), need 2500 gold");
             Abuse = RootMenu.CreateHoldKey("Abuse Key", Key.None);
             OnOff.ValueChanged += OnOff_ValueChanged;
         }
