@@ -120,22 +120,27 @@ namespace CourierController
             {
                 LogManager.Error(e + " | " + "Error 2");
             }
-            
+
             if (GlobalMenu.CourierMoveSlot && MyCourier.Distance2D(MyHero.Position) <= 1000 && MyCourier.State == CourierState.Deliver && !sleeperMoveItem.Sleeping && MyHero.IsAlive)
             {
                 try
                 {
                     var ObserverCourier = MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_ward_observer);
                     var TPCourier = MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_tpscroll);
+                    var ItemAllnoRecipeNoNeutrals = MyCourier.Inventory.Items.Where(x => x.KeyValue.GetKeyValue("ItemIsNeutralDrop").GetBooleon() == false && !x.IsRecipe);
                     var MoveItems = MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable && x.Cost <= 450 && x.IsValid);
                     if (MyCourier.Inventory.MainItems.Count() == 1 && TPCourier != null || (MyCourier.Inventory.MainItems.Count() == 1 && ObserverCourier != null))
                     {
                         //nothing
                     }
-
-                    else if (MyHero.Inventory.FreeMainSlots.Count() == 0 && (MyHero.Inventory.FreeBackpackSlots.Count() == 3 || MyHero.Inventory.FreeBackpackSlots.Count() == 2 || MyHero.Inventory.FreeBackpackSlots.Count() == 1) && MoveItems != null && !sleeperMoveItem.Sleeping)
+                    else if 
+                        (ItemAllnoRecipeNoNeutrals.Count() != 0
+                        && MyHero.Inventory.FreeMainSlots.Count() == 0 
+                        && MyHero.Inventory.FreeBackpackSlots.Count() != 0 
+                        && (MyHero.Inventory.FreeBackpackSlots.Count() == 3 || MyHero.Inventory.FreeBackpackSlots.Count() == 2 || MyHero.Inventory.FreeBackpackSlots.Count() == 1) 
+                        && MoveItems != null 
+                        && !sleeperMoveItem.Sleeping)
                     {
-
                         MyHero.Inventory.Move(MoveItems, MyHero.Inventory.FreeBackpackSlots.FirstOrDefault());
                         sleeperMoveItem.Sleep(10000);
                     }
@@ -143,6 +148,7 @@ namespace CourierController
                 catch (Exception e)
                 {
                     LogManager.Error(e + " | " + "Error 1");
+
                 }
                 
             }
