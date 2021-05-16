@@ -52,6 +52,10 @@ namespace AbuseTP
                 }
 
             }
+            else
+            {
+                UpdateManager.IngameUpdate -= UpdateManager_IngameUpdate;
+            }
         }
         private void UpdateManager_IngameUpdate()
         {
@@ -120,7 +124,7 @@ namespace AbuseTP
                 MyHero.Drop(MyHero.Inventory.TownPortalScroll, MyHero.Position);
             }
 
-            SleeperOrder_1.Sleep(100);
+            SleeperOrder_1.Sleep(200);
 
         }
 

@@ -20,14 +20,17 @@ namespace CourierController
         private void UpdateGame()
         {
             var MyHero = EntityManager.LocalHero;
-            var MyCourier = EntityManager.GetEntities<Courier>().Where(x => x.IsAlive && x.IsControllable && x.Owner == MyHero.Owner).FirstOrDefault();
+            var MyCourier = EntityManager.GetEntities<Courier>().Where(x => x.IsControllable && x.Owner == MyHero.Owner).FirstOrDefault();
+
             if (MyHero == null) return;
             if (MyCourier == null) return;
             if (!MyCourier.IsAlive) return;
+            if (GameManager.GameMode == GameMode.Turbo) return;
             if (sleeper.Sleeping) return;
+
             try
             {
-                var DistanceFountain = 3000;
+                var DistanceFountain = 2500;
                 var SpellCourierBurst = MyCourier.Spellbook.GetSpellById(AbilityId.courier_burst);
                 var SpellCourierHome = MyCourier.Spellbook.GetSpellById(AbilityId.courier_return_stash_items);
                 var SpellCourierShield = MyCourier.Spellbook.GetSpellById(AbilityId.courier_shield);
@@ -80,17 +83,31 @@ namespace CourierController
                     SpellCourierBurst.Cast();
                 }
 
-                if (GlobalMenu.CourierFontan && (MyCourier.State == CourierState.AtBase && MyCourier.State != CourierState.Move && MyCourier.State != CourierState.Deliver) && SelectedCourier == null && MyCourier.ActiveShop == ShopType.Base)
+                if (GlobalMenu.CourierFontan && (MyCourier.State != CourierState.Move && MyCourier.State != CourierState.Deliver) && SelectedCourier == null && MyCourier.ActiveShop == ShopType.Base)
                 {
-                    if (MyHero.Team == Team.Radiant && allheroEnemyRadiusFontanRadiant == null)
+                    if(MyHero.Team == Team.Radiant)
                     {
-                        MyCourier.Move(new Vector3(-6339, -5807, 256));
+                        if (allheroEnemyRadiusFontanRadiant == null && MyCourier.State == CourierState.AtBase)
+                        {
+                            MyCourier.Move(new Vector3(-6339, -5807, 256));
+                        }
+                        else if (MyCourier.State != CourierState.AtBase && allheroEnemyRadiusFontanRadiant != null)
+                        {
+                            MyCourier.Move(new Vector3(-6928, -6528, 384));
+                        }
                     }
 
-                    else if (MyHero.Team == Team.Dire && allheroEnemyRadiusFontanDire == null)
+                    if(MyHero.Team == Team.Dire)
                     {
-                        MyCourier.Move(new Vector3(6263, 5764, 256));
+                        if (allheroEnemyRadiusFontanDire == null && MyCourier.State == CourierState.AtBase)
+                        {
+                            MyCourier.Move(new Vector3(6263, 5764, 256));
 
+                        }
+                        else if(MyCourier.State != CourierState.AtBase && allheroEnemyRadiusFontanDire != null)
+                        {
+                            MyCourier.Move(new Vector3(7008, 6387, 392));
+                        }
                     }
                 }
 
@@ -109,7 +126,6 @@ namespace CourierController
 
 
                 }
-
 
                 if (GlobalMenu.CourierShield && allheroEnemyRadiusCourier != null && SpellCourierShield.Cooldown == 0 && MyCourier.Level >= 20)
                 {
