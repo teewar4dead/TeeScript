@@ -4,9 +4,6 @@ namespace CourierController
 {
     public class Main : Bootstrapper
     {
-        protected override void OnActivate()
-        {
-            new GlobalMenu();
-        }
+        protected override void OnActivate() => new GlobalMenu();
     }
 }
