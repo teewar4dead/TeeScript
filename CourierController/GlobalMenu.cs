@@ -1,6 +1,7 @@
-﻿using Divine;
+﻿using Divine.Entity.Entities.Abilities.Components;
 using Divine.Menu;
 using Divine.Menu.Items;
+using Divine.Renderer;
 
 namespace CourierController
 {
@@ -15,20 +16,20 @@ namespace CourierController
         public static string[] selectorRun = { "Отключить", "При доставке", "По кд" };
         public GlobalMenu()
         {
-            RendererManager.LoadTexture("Fontan", "panorama/images/spellicons/fountain_heal_png.vtex_c");
+            RendererManager.LoadImage("Fontan", "panorama/images/spellicons/fountain_heal_png.vtex_c");
             var RootMenu = MenuManager.CreateRootMenu("CourierController");
-            RootMenu.SetAbilityTexture(AbilityId.item_courier);
+            RootMenu.SetAbilityImage(AbilityId.item_courier);
             CourierOnOff = RootMenu.CreateSwitcher("Включить", false);
             CourierMoveSlot = RootMenu.CreateSwitcher("Автоматически освободить слот при доставке предмета", false);
-            CourierMoveSlot.SetAbilityTexture(AbilityId.courier_transfer_items);
+            CourierMoveSlot.SetAbilityImage(AbilityId.courier_transfer_items);
             CourierBuyWard = RootMenu.CreateSwitcher("Авто-покупка вардов", false);
-            CourierBuyWard.SetAbilityTexture(AbilityId.item_ward_observer);
+            CourierBuyWard.SetAbilityImage(AbilityId.item_ward_observer);
             CourierShield = RootMenu.CreateSwitcher("Использовать щит в случае необходимости", false);
-            CourierShield.SetAbilityTexture(AbilityId.courier_shield);
+            CourierShield.SetAbilityImage(AbilityId.courier_shield);
             CourierFontan = RootMenu.CreateSwitcher("Держать расстояния от фонтана", false);
-            CourierFontan.SetTexture("Fontan");
+            CourierFontan.SetImage("Fontan");
             CourierFast = RootMenu.CreateSelector("Использовать ускорения", selectorRun);
-            CourierFast.SetAbilityTexture(AbilityId.courier_burst);
+            CourierFast.SetAbilityImage(AbilityId.courier_burst);
             new Base();
         }
     }

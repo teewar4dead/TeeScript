@@ -1,8 +1,19 @@
 ﻿using Divine;
-using Divine.SDK.Extensions;
-using Divine.SDK.Helpers;
-using Divine.SDK.Managers.Log;
-using SharpDX;
+using Divine.Entity;
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Entity.Entities.Abilities.Items.Components;
+using Divine.Entity.Entities.Components;
+using Divine.Entity.Entities.Players;
+using Divine.Entity.Entities.Units;
+using Divine.Entity.Entities.Units.Components;
+using Divine.Entity.Entities.Units.Heroes;
+using Divine.Extensions;
+using Divine.Game;
+using Divine.Helpers;
+using Divine.Log;
+using Divine.Numerics;
+using Divine.Update;
+
 using System;
 using System.Linq;
 
@@ -32,7 +43,7 @@ namespace CourierController
             var SpellCourierHome = MyCourier.Spellbook.GetSpellById(AbilityId.courier_return_stash_items);
             var SpellCourierShield = MyCourier.Spellbook.GetSpellById(AbilityId.courier_shield);
             var ObserverAviable = GameManager.ItemStockInfos.FirstOrDefault(x => x.AbilityId == AbilityId.item_ward_observer && (MyHero.Team == Team.Radiant && x.Team == Team.Radiant) || (MyHero.Team == Team.Dire && x.Team == Team.Dire)).IsAvailable;
-            var CourierCheckFreeSlots = MyCourier.Inventory.GetFreeSlots(ItemSlot.MainSlot_1, ItemSlot.BackPack_3).Count() == 0;
+            var CourierCheckFreeSlots = MyCourier.Inventory.GetFreeSlots(ItemSlot.MainSlot1, ItemSlot.BackPack3).Count() == 0;
             var SelectedCourier = MyHero.Player.SelectedUnits.Where(x => x.Handle == MyCourier.Handle).FirstOrDefault();
             var allheroEnemyRadiusCourier = EntityManager.GetEntities<Hero>().Where(x => x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero) && x.Distance2D(MyCourier.Position) < 2000).FirstOrDefault();
             var EnemyRadiusFontan = EntityManager.GetEntities<Hero>().Where(x => (x.Distance2D(new Vector3(-6339, -5807, 256)) < DistanceFountain && MyHero.Team == Team.Radiant && x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero)) || (x.Distance2D(new Vector3(6263, 5764, 256)) < DistanceFountain && MyHero.Team == Team.Dire && x.IsAlive && x.IsVisible && x.IsValid && !x.IsAlly(MyHero)) && x.Name != MyHero.Name).FirstOrDefault();
@@ -77,7 +88,7 @@ namespace CourierController
             {
                 var ObserverCourier = MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_ward_observer);
                 var TPCourier = MyCourier.Inventory.Items.FirstOrDefault(x => x.Id == AbilityId.item_tpscroll);
-                var ItemAllnoRecipeNoNeutrals = MyCourier.Inventory.Items.Where(x => x.KeyValue.GetKeyValue("ItemIsNeutralDrop").GetBooleon() == false && !x.IsRecipe);
+                var ItemAllnoRecipeNoNeutrals = MyCourier.Inventory.Items.Where(x => x.KeyValue.GetSubKey("ItemIsNeutralDrop").GetBooleon() == false && !x.IsRecipe);
                 var MoveItems = MyHero.Inventory.MainItems.OrderBy(x => x.Cost).FirstOrDefault(x => x.IsSellable && x.Cost <= 450 && x.IsValid);
 
                 bool checkTpAndObserver =
