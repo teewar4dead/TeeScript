@@ -1,15 +1,25 @@
-﻿using Divine;
-using System;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Divine.SDK.Extensions;
-using SharpDX;
+
+using Divine.Entity.Entities.Abilities;
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Entity.Entities.Abilities.Items;
+using Divine.Entity.Entities.Abilities.Items.Components;
+using Divine.Entity.Entities.Units;
+using Divine.Entity.Entities.Units.Components;
+using Divine.Extensions;
+using Divine.Modifier.Modifiers;
+using Divine.Numerics;
 
 namespace Tee.ShadowFiend
 {
     class Helper
     {
+        public static Vector2 FromPolarCoordinates(float radial, float polar)
+        {
+            return new((float)Math.Cos(polar) * radial, (float)Math.Sin(polar) * radial);
+        }
+
         public static bool ManaCheckItemAndHero(float manaCost, float manaPool)
         {
             if (manaPool - manaCost > 0)
@@ -110,7 +120,7 @@ namespace Tee.ShadowFiend
             Vector3 pos = Hero.Position;
             if (CantMove(Hero) || !Hero.IsMoving || delay == 0) return pos;
             float speed = Hero.MovementSpeed;
-            return pos + (Vector3)SharpDXExtensions.FromPolarCoordinates(1f, Hero.RotationRad) * speed * delay;
+            return pos + (Vector3)Helper.FromPolarCoordinates(1f, Hero.RotationRad) * speed * delay;
         }
     }
 

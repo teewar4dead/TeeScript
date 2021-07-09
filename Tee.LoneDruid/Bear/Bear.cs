@@ -1,14 +1,19 @@
-using Divine;
-using Divine.SDK.Extensions;
-using Divine.SDK.Helpers;
-using Divine.SDK.Orbwalker;
-using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+
+using Divine.Entity.Entities.Abilities;
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Entity.Entities.Units.Heroes.Components;
+using Divine.Extensions;
+using Divine.Game;
+using Divine.Helpers;
+using Divine.Input;
+using Divine.Input.EventArgs;
+using Divine.Numerics;
+using Divine.Renderer;
+using Divine.Update;
+
 using TeeLoneDruid.Bear;
 using TeeLoneDruid.Bear.Items;
 
@@ -30,8 +35,6 @@ namespace TeeLoneDruid
                 MenuGlobal.OnOff.ValueChanged += OnOff_ValueChanged;
                 InputManager.MouseKeyDown += InputManager_MouseKeyDown;
  
-                
-                
                 if (BearConfig.SummonBear.Value && LocalDruidHero.Level == 1)
                 {
                     LocalDruidHero.Spellbook.Spell1.Upgrade();
@@ -120,7 +123,7 @@ namespace TeeLoneDruid
         private void RendererManager_Draw()
         {
             if (CourierGiveItem == true)
-                RendererManager.DrawTexture(AbilityId.lone_druid_spirit_bear, new RectangleF(RendererManager.ScreenSize.X - (83 * scaling), RendererManager.ScreenSize.Y - (90 * scaling), 60 * scaling, 60 * scaling), AbilityTextureType.Round, true);
+                RendererManager.DrawImage(AbilityId.lone_druid_spirit_bear, new RectangleF(RendererManager.ScreenSize.X - (83 * scaling), RendererManager.ScreenSize.Y - (90 * scaling), 60 * scaling, 60 * scaling), AbilityImageType.Round, true);
 
         }
         private void BearComboUpdate()

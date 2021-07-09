@@ -1,11 +1,10 @@
-﻿using Divine;
-using Divine.SDK.Extensions;
-using SharpDX;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Divine.Entity.Entities.Abilities.Items.Components;
+using Divine.Entity.Entities.Units.Components;
+using Divine.Extensions;
+using Divine.Renderer;
 
 namespace TeeLoneDruid.Bear
 {
@@ -37,7 +36,6 @@ namespace TeeLoneDruid.Bear
 
                           Prioritet = true;
                         }
-                        
                     }
 
 
@@ -78,15 +76,10 @@ namespace TeeLoneDruid.Bear
                 }
 
             }
-            catch (Exception)
+            catch
             {
-
-
+                // Ignore
             }
-
-
         }
-
-
     }
 }

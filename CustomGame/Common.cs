@@ -1,8 +1,11 @@
-﻿using CustomGame.Game;
-using Divine;
+﻿using System.Reflection;
+
+using CustomGame.Game;
+
+using Divine.Entity.Entities.Abilities.Components;
 using Divine.Menu;
 using Divine.Menu.Items;
-using System.Reflection;
+using Divine.Renderer;
 
 namespace CustomGame
 {
@@ -12,15 +15,15 @@ namespace CustomGame
         public Common()
         {
             RootMenu = MenuManager.CreateRootMenu("Custom Game");
-            RootMenu.SetAbilityTexture(Divine.AbilityId.roshan_bash);
+            RootMenu.SetAbilityImage(AbilityId.roshan_bash);
 
             //initialization Class
             new RandomDefense(RootMenu);
             new PickUp(RootMenu);
             //initialization Image
-            RendererManager.LoadTexture("RandomDefense.Belka", Assembly.GetExecutingAssembly().GetManifestResourceStream(@"CustomGame.img.s1200.png"));
-            RendererManager.LoadTexture("RandomDefense.Key", Assembly.GetExecutingAssembly().GetManifestResourceStream(@"CustomGame.img.key.png"));
-            RendererManager.LoadTexture("RandomDefense.RoshanGold", Assembly.GetExecutingAssembly().GetManifestResourceStream(@"CustomGame.img.Roshan_model_Gold.png"));
+            RendererManager.LoadImage("RandomDefense.Belka", Assembly.GetExecutingAssembly().GetManifestResourceStream(@"CustomGame.img.s1200.png"));
+            RendererManager.LoadImage("RandomDefense.Key", Assembly.GetExecutingAssembly().GetManifestResourceStream(@"CustomGame.img.key.png"));
+            RendererManager.LoadImage("RandomDefense.RoshanGold", Assembly.GetExecutingAssembly().GetManifestResourceStream(@"CustomGame.img.Roshan_model_Gold.png"));
         }
     }
 }

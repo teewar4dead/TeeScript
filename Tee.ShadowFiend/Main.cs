@@ -1,17 +1,19 @@
-﻿using Divine;
+﻿using Divine.Entity;
+using Divine.Entity.Entities.Components;
+using Divine.Service;
 
 namespace Tee.ShadowFiend
 {
-    public class Main:Bootstrapper
+    public class Main : Bootstrapper
     {
         protected override void OnActivate()
         {
             GetSet.MyHero = EntityManager.LocalHero;
-            if (GetSet.MyHero == null || !GetSet.MyHero.IsValid ||
-                GetSet.MyHero.ClassId != ClassId.CDOTA_Unit_Hero_Nevermore)
+            if (GetSet.MyHero == null || !GetSet.MyHero.IsValid || GetSet.MyHero.ClassId != ClassId.CDOTA_Unit_Hero_Nevermore)
             {
                 return;
             }
+
             GetSet.Ultimate = GetSet.MyHero.Spellbook.Spell6;
             new GlobalMenu();
         }

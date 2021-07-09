@@ -1,9 +1,4 @@
-﻿using Divine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Divine.Service;
 
 namespace TeeLoneDruid
 {
@@ -13,7 +8,6 @@ namespace TeeLoneDruid
         {
             new MenuGlobal();
             new BearSpirit();
-
         }
     }
 }

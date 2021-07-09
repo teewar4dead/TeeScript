@@ -1,11 +1,7 @@
-﻿using Divine.Menu;
+﻿using Divine.Entity.Entities.Abilities.Components;
+using Divine.Menu;
 using Divine.Menu.Items;
-using SharpDX;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Divine.Numerics;
 
 namespace TeeLoneDruid
 {
@@ -19,7 +15,7 @@ namespace TeeLoneDruid
           
             OnOff = RootMenu.CreateSwitcher("Enable", true);
             var BearMenu = RootMenu.CreateMenu("Spirit Bear");
-            BearMenu.SetAbilityTexture(Divine.AbilityId.lone_druid_spirit_bear);
+            BearMenu.SetAbilityImage(AbilityId.lone_druid_spirit_bear);
             RootMenu.SetFontColor(Color.Indigo);
 
             bearConfig = new BearConfig(BearMenu);

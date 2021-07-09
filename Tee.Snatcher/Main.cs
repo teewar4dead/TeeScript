@@ -1,8 +1,4 @@
-﻿using Divine;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Divine.Service;
 
 namespace Tee.Snatcher
 {

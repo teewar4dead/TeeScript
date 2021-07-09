@@ -1,25 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31019.35
+VisualStudioVersion = 16.0.31410.223
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tee.Snatcher", "Tee.Snatcher.csproj", "{82780C4C-961C-4456-9F71-2F4AD194E1C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tee.Snatcher", "Tee.Snatcher.csproj", "{977E8D36-91E2-4EEB-807C-F365EB4B70C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{82780C4C-961C-4456-9F71-2F4AD194E1C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82780C4C-961C-4456-9F71-2F4AD194E1C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82780C4C-961C-4456-9F71-2F4AD194E1C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82780C4C-961C-4456-9F71-2F4AD194E1C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977E8D36-91E2-4EEB-807C-F365EB4B70C0}.Release|x64.ActiveCfg = Release|x64
+		{977E8D36-91E2-4EEB-807C-F365EB4B70C0}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A40E5518-73EC-45BA-B91C-B18B3DE6DADD}
+		SolutionGuid = {46AD51C2-285B-489D-8966-B5D6E7121D81}
 	EndGlobalSection
 EndGlobal

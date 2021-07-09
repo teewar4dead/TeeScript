@@ -1,16 +1,15 @@
-﻿using Divine;
-using Divine.Menu;
-using Divine.Menu.Items;
-using SharpDX;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 
+using Divine.Entity;
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Entity.Entities.Units.Heroes;
+using Divine.Menu;
+using Divine.Menu.Items;
+using Divine.Numerics;
+
 namespace Tee.ShadowFiend
-{   
+{
     class GlobalMenu
     {
         public static MenuSwitcher OnOff { get; set; }
@@ -77,19 +76,19 @@ namespace Tee.ShadowFiend
             var LinkenMenu = RootMenu.CreateMenu("Cast to linken's sphere");
             LinkaShow = LinkenMenu.CreateSwitcher("Show Linkens Sphere", true);
             LinkenMenu.CreateSpellToggler("", ListLinkenToggler);
-            LinkenMenu.SetAbilityTexture(AbilityId.item_sphere);
+            LinkenMenu.SetAbilityImage(AbilityId.item_sphere);
             UltComboKey = RootMenu.CreateHoldKey("Ult Combo", Key.None);
-            UltComboKey.SetAbilityTexture(AbilityId.item_cyclone);
+            UltComboKey.SetAbilityImage(AbilityId.item_cyclone);
             AutoRazeKey = RootMenu.CreateHoldKey("Auto Raze", Key.None);
-            AutoRazeKey.SetAbilityTexture(AbilityId.nevermore_shadowraze1);
+            AutoRazeKey.SetAbilityImage(AbilityId.nevermore_shadowraze1);
             AutoRazeMouseKey = RootMenu.CreateSwitcher("Auto Raze is mouse", true);
-            AutoRazeMouseKey.SetAbilityTexture(AbilityId.nevermore_shadowraze1);
+            AutoRazeMouseKey.SetAbilityImage(AbilityId.nevermore_shadowraze1);
             PauseGame = RootMenu.CreateSwitcher("Pause game at Killing", true);
-            PauseGame.SetAbilityTexture(AbilityId.item_cyclone);
+            PauseGame.SetAbilityImage(AbilityId.item_cyclone);
             UltGameChat = RootMenu.CreateSwitcher("Send to chat \"?\"", true);
-            UltGameChat.SetAbilityTexture(AbilityId.nevermore_requiem);
+            UltGameChat.SetAbilityImage(AbilityId.nevermore_requiem);
             ShowRadiusRaze = RootMenu.CreateSwitcher("Show Raze Radius", true);
-            ShowRadiusRaze.SetAbilityTexture(AbilityId.nevermore_shadowraze3);
+            ShowRadiusRaze.SetAbilityImage(AbilityId.nevermore_shadowraze3);
             new MainSF();
         }
     }

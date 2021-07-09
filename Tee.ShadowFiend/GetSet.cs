@@ -1,10 +1,6 @@
-﻿using Divine;
-using Divine.SDK.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Divine.Entity.Entities.Abilities;
+using Divine.Entity.Entities.Abilities.Items;
+using Divine.Entity.Entities.Units;
 
 namespace Tee.ShadowFiend
 {
@@ -39,11 +35,5 @@ namespace Tee.ShadowFiend
         public static Item item_bullwhip;
         public static Item item_spider_legs;
         public static Item item_bkb;
-
-
-
-
-
-
     }
 }

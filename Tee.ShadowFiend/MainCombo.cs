@@ -1,12 +1,11 @@
-﻿using Divine;
-using Divine.SDK.Extensions;
-using Divine.SDK.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Divine.SDK.Orbwalker;
+﻿using System.Linq;
+
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Entity.Entities.Abilities.Items;
+using Divine.Extensions;
+using Divine.Helpers;
+using Divine.Orbwalker;
+using Divine.Update;
 
 namespace Tee.ShadowFiend
 {
@@ -200,7 +199,7 @@ namespace Tee.ShadowFiend
             var spell3 = GetSet.MyHero.Spellbook.Spell3;
 
             var Rotation = GetSet.MyHero.RotationRad;
-            var vector2Polar = SharpDXExtensions.FromPolarCoordinates(1f, Rotation);
+            var vector2Polar = Helper.FromPolarCoordinates(1f, Rotation);
 
 
             var Pos1 = GetSet.MyHero.Position + (vector2Polar.ToVector3() * 200);

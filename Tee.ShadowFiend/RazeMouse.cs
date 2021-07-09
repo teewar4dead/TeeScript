@@ -1,9 +1,9 @@
-﻿using Divine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Divine.Entity.Entities.Abilities;
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Entity.Entities.Components;
+using Divine.Game;
+using Divine.Order.EventArgs;
+using Divine.Order.Orders.Components;
 
 namespace Tee.ShadowFiend
 {

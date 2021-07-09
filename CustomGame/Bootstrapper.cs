@@ -1,4 +1,4 @@
-﻿using Divine;
+﻿using Divine.Service;
 
 namespace CustomGame
 {
@@ -7,7 +7,6 @@ namespace CustomGame
         protected override void OnActivate()
         {
             new Common();
-
         }
     }
 }

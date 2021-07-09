@@ -1,14 +1,17 @@
-﻿using Divine;
-using Divine.SDK.Extensions;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Divine.Entity;
+using Divine.Entity.Entities.Components;
+using Divine.Entity.Entities.Units;
+using Divine.Entity.Entities.Units.Creeps;
+using Divine.Entity.Entities.Units.Heroes;
+using Divine.Extensions;
+using Divine.Game;
 
 namespace TeeLoneDruid.Bear
 {
-     class GetEntity
+    class GetEntity
     {
         public static bool CourierGiveItem { get; set; }
         public bool Prioritet { get; set; }

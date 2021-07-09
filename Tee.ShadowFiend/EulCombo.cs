@@ -1,26 +1,26 @@
-﻿using Divine;
-using Divine.SDK.Extensions;
-using Divine.SDK.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Extensions;
+using Divine.Game;
+using Divine.GameConsole;
+using Divine.Helpers;
+using Divine.Update;
 
 namespace Tee.ShadowFiend
 {
     class EulCombo
     {
-        public static Sleeper EulSleeper = new Sleeper();
-        public static Sleeper BlinkSleeper = new Sleeper();
-        public static Sleeper MoveSleeper = new Sleeper();
-        public static Sleeper UltimateSleeper = new Sleeper();
+        public static Sleeper EulSleeper = new();
+        public static Sleeper BlinkSleeper = new();
+        public static Sleeper MoveSleeper = new();
+        public static Sleeper UltimateSleeper = new();
         public static bool ActivateRaze = true;
         private static bool MoveMouse;
 
         public static void EulComboUpdate()
         {
-            var PingGame = GameManager.Ping / 1000;
+            var PingGame = GameManager.Ping / 1000f;
 
             if (MoveMouse)
             {
@@ -65,7 +65,7 @@ namespace Tee.ShadowFiend
             {
                 if (GlobalMenu.UltGameChat.Value)
                 {
-                    GameManager.ExecuteCommand("Say ?");
+                    GameConsoleManager.ExecuteCommand("Say ?");
                 }
                 return;
             }
@@ -117,7 +117,7 @@ namespace Tee.ShadowFiend
                     }
                     if (GlobalMenu.PauseGame.Value)
                     {
-                        GameManager.ExecuteCommand("dota_pause");
+                        GameConsoleManager.ExecuteCommand("dota_pause");
                     }
                 }
 

@@ -1,5 +1,7 @@
-﻿using Divine;
-using SharpDX;
+﻿using Divine.Entity.Entities.Units;
+using Divine.Numerics;
+using Divine.Particle.Components;
+using Divine.Particle.Particles;
 
 namespace CustomGame
 {
@@ -13,7 +15,7 @@ namespace CustomGame
         {
             if (targetParticleEffect?.IsValid != true)
             {
-                targetParticleEffect = Divine.ParticleManager.CreateParticle(@"materials\ensage_ui\particles\target.vpcf", ParticleAttachment.AbsOriginFollow, target);
+                targetParticleEffect = Divine.Particle.ParticleManager.CreateParticle(@"materials\ensage_ui\particles\target.vpcf", ParticleAttachment.AbsOriginFollow, target);
                 targetParticleEffect.SetControlPoint(6, new Vector3(255));
             }
 

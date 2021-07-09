@@ -1,11 +1,9 @@
-﻿using Divine;
-using Divine.SDK.Extensions;
-using SharpDX;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+
+using Divine.Extensions;
+using Divine.Numerics;
+using Divine.Particle;
+using Divine.Particle.Components;
 
 namespace Tee.ShadowFiend
 {
@@ -14,14 +12,12 @@ namespace Tee.ShadowFiend
         public static int[] NeverR = new[] { 200, 450, 700};
         public static void DrawRadiusRazeOnDraw()
         {
-
-
             try
             {
                 foreach (var Rad in NeverR)
                 {
                     var Rotation = GetSet.MyHero.RotationRad;
-                    var vector2Polar = SharpDXExtensions.FromPolarCoordinates(1f, Rotation);
+                    var vector2Polar = Helper.FromPolarCoordinates(1f, Rotation);
 
 
                     var Pos = GetSet.MyHero.Position + (vector2Polar.ToVector3() * Rad);

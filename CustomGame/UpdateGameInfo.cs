@@ -1,6 +1,11 @@
-﻿using Divine;
-using Divine.SDK.Extensions;
-using System.Linq;
+﻿using System.Linq;
+
+using Divine.Entity;
+using Divine.Entity.Entities.PhysicalItems;
+using Divine.Entity.Entities.Units;
+using Divine.Extensions;
+using Divine.Game;
+using Divine.Update;
 
 namespace CustomGame
 {

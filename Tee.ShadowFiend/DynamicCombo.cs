@@ -1,11 +1,11 @@
-﻿using Divine;
-using Divine.SDK.Extensions;
-using Divine.SDK.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Entity.Entities.Abilities.Items;
+using Divine.Extensions;
+using Divine.Helpers;
+using Divine.Update;
 
 namespace Tee.ShadowFiend
 {

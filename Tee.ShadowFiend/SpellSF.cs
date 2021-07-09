@@ -1,11 +1,7 @@
-﻿using Divine.SDK.Extensions;
-using Divine.SDK.Helpers;
-using Divine.SDK.Orbwalker;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Divine.Extensions;
+using Divine.Helpers;
+using Divine.Orbwalker;
 
 namespace Tee.ShadowFiend
 {
@@ -15,6 +11,7 @@ namespace Tee.ShadowFiend
         public static Sleeper OrdSleeper2 = new Sleeper();
         public static Sleeper OrdSleeper3 = new Sleeper();
         public static Sleeper AttackSleep = new Sleeper();
+
         public static void SpellCombo()
         {
 
@@ -29,7 +26,7 @@ namespace Tee.ShadowFiend
             var spell3 = GetSet.MyHero.Spellbook.Spell3;
 
             var Rotation = GetSet.MyHero.RotationRad;
-            var vector2Polar = SharpDXExtensions.FromPolarCoordinates(1f, Rotation);
+            var vector2Polar = Helper.FromPolarCoordinates(1f, Rotation);
 
 
             var Pos1 = GetSet.MyHero.Position + (vector2Polar.ToVector3() * 200);
@@ -48,6 +45,7 @@ namespace Tee.ShadowFiend
                 }
                 AttackSleep.Sleep(800);
             }
+
             if (Pos1.Distance2D(GetSet.Target.Position) <= 250 && Helper.CanBeCasted(spell1, GetSet.MyHero) && !OrdSleeper1.Sleeping)
             {
                 
@@ -66,8 +64,6 @@ namespace Tee.ShadowFiend
                 spell3.Cast();
                 OrdSleeper3.Sleep(670);
             }
-           
-
 
             if (spell1.IsInAbilityPhase && Pos1.Distance2D(GetSet.Target.Position) >= 250)
             {
@@ -81,7 +77,6 @@ namespace Tee.ShadowFiend
             {
                 GetSet.MyHero.Stop();
             }
-
         }
     }
 }

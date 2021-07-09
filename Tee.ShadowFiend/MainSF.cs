@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Divine;
-using System.Threading.Tasks;
-using Divine.SDK.Helpers;
-using Divine.SDK.Extensions;
-using SharpDX;
+
+using Divine.Entity;
+using Divine.Entity.Entities.Abilities.Components;
+using Divine.Entity.Entities.Units.Heroes;
+using Divine.Extensions;
+using Divine.Numerics;
+using Divine.Order;
+using Divine.Particle;
+using Divine.Particle.Components;
+using Divine.Renderer;
+using Divine.Update;
 
 namespace Tee.ShadowFiend
 {
     class MainSF
     {
-
-
         public MainSF()
         {
             GlobalMenu.OnOff.ValueChanged += OnOff_ValueChanged;

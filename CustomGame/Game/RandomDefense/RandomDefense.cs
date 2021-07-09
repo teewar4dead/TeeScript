@@ -1,11 +1,9 @@
-﻿using Divine;
+﻿using Divine.Game;
+using Divine.Helpers;
 using Divine.Menu.Items;
-using Divine.SDK.Extensions;
-using Divine.SDK.Helpers;
-using SharpDX;
-using System;
-using System.Linq;
-using System.Reflection;
+using Divine.Numerics;
+using Divine.Renderer;
+using Divine.Update;
 
 namespace CustomGame
 {
@@ -72,19 +70,19 @@ namespace CustomGame
             {
                 var pos = RendererManager.WorldToScreen(Belka.Position + new Vector3(0, 0, Belka.HealthBarOffset));
                 var rect = new RectangleF(pos.X, pos.Y, 100, 100);
-                if (!pos.IsZero) RendererManager.DrawTexture("RandomDefense.Belka", rect);
+                if (!pos.IsZero) RendererManager.DrawImage("RandomDefense.Belka", rect);
             }
             if (RoshaGold && GoldRosha != null)
             {
                 var pos2 = RendererManager.WorldToScreen(GoldRosha.Position + new Vector3(0, 0, GoldRosha.HealthBarOffset));
                 var rect2 = new RectangleF(pos2.X, pos2.Y, 100, 100);
-                if (!pos2.IsZero) RendererManager.DrawTexture("RandomDefense.RoshanGold", rect2);
+                if (!pos2.IsZero) RendererManager.DrawImage("RandomDefense.RoshanGold", rect2);
             }
             if (Key && UpdateGameInfo.Key != null)
             {
                 var pos3 = RendererManager.WorldToScreen(UpdateGameInfo.Key.Position);
                 var rect3 = new RectangleF(pos3.X, pos3.Y, 100, 100);
-                if (!pos3.IsZero) RendererManager.DrawTexture("RandomDefense.Key", rect3);
+                if (!pos3.IsZero) RendererManager.DrawImage("RandomDefense.Key", rect3);
             }
         }
     }

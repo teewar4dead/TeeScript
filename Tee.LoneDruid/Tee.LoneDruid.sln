@@ -1,25 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31019.35
+VisualStudioVersion = 16.0.31410.223
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tee.LoneDruid", "Tee.LoneDruid.csproj", "{DDBEFA6E-DE6F-4D0B-97F9-C80F39FF7513}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tee.LoneDruid", "Tee.LoneDruid.csproj", "{174925BD-5620-4FB0-A94A-96FBEDFA59D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DDBEFA6E-DE6F-4D0B-97F9-C80F39FF7513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDBEFA6E-DE6F-4D0B-97F9-C80F39FF7513}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDBEFA6E-DE6F-4D0B-97F9-C80F39FF7513}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDBEFA6E-DE6F-4D0B-97F9-C80F39FF7513}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174925BD-5620-4FB0-A94A-96FBEDFA59D9}.Release|x64.ActiveCfg = Release|x64
+		{174925BD-5620-4FB0-A94A-96FBEDFA59D9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B0A92B0B-CA42-49D1-A93B-887478045154}
+		SolutionGuid = {70825CFA-30CF-489F-839A-474610B841D4}
 	EndGlobalSection
 EndGlobal
